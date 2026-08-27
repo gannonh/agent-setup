@@ -1,3 +1,7 @@
+---
+description: sglobal agent rules
+alwaysApply: true
+---
 <!-- begin global rules -->
 
 ## Global Agent Instructions

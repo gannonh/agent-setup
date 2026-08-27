@@ -1,0 +1,58 @@
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { parseArgs } from "../src/args.js";
+import { STEPS } from "../src/targets.js";
+
+describe("parseArgs", () => {
+  it("with no flags is interactive", () => {
+    assert.deepEqual(parseArgs([]), { kind: "interactive" });
+  });
+
+  it("parses --all as every step", () => {
+    assert.deepEqual(parseArgs(["--all"]), { kind: "install", targets: [...STEPS] });
+  });
+
+  it("parses a single target flag", () => {
+    assert.deepEqual(parseArgs(["--codex"]), { kind: "install", targets: ["codex"] });
+    assert.deepEqual(parseArgs(["--cursor"]), { kind: "install", targets: ["cursor"] });
+  });
+
+  it("parses --pi as AGENTS.md and extensions", () => {
+    assert.deepEqual(parseArgs(["--pi"]), {
+      kind: "install",
+      targets: ["pi-agents", "pi-extensions"],
+    });
+  });
+
+  it("combines target flags in stable order", () => {
+    assert.deepEqual(parseArgs(["--pi", "--codex"]), {
+      kind: "install",
+      targets: ["codex", "pi-agents", "pi-extensions"],
+    });
+  });
+
+  it("lets --all win over target flags", () => {
+    assert.deepEqual(parseArgs(["--codex", "--all"]), {
+      kind: "install",
+      targets: [...STEPS],
+    });
+  });
+
+  it("treats --help as help even with other flags", () => {
+    assert.deepEqual(parseArgs(["--codex", "--help"]), { kind: "help" });
+    assert.deepEqual(parseArgs(["-h"]), { kind: "help" });
+  });
+
+  it("parses --version", () => {
+    assert.deepEqual(parseArgs(["--version"]), { kind: "version" });
+    assert.deepEqual(parseArgs(["-v"]), { kind: "version" });
+  });
+
+  it("rejects unknown options", () => {
+    const parsed = parseArgs(["--skills"]);
+    assert.equal(parsed.kind, "error");
+    if (parsed.kind === "error") {
+      assert.match(parsed.message, /Unknown option: --skills/);
+    }
+  });
+});

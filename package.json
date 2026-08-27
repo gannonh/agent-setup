@@ -1,0 +1,38 @@
+{
+  "name": "@gannonh/agent-setup",
+  "version": "0.1.0",
+  "description": "Install Codex, Cursor, and Pi agent configs, plugins, and skills",
+  "type": "module",
+  "bin": {
+    "agent-setup": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "scripts",
+    ".codex",
+    ".cursor/rules",
+    ".pi"
+  ],
+  "scripts": {
+    "build": "tsc && chmod +x dist/cli.js",
+    "prepublishOnly": "npm run build",
+    "test": "tsx --test test/*.test.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gannonh/agent-setup.git"
+  },
+  "license": "MIT",
+  "author": "Gannon Hall",
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  }
+}
