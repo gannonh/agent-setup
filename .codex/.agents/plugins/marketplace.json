@@ -1,0 +1,21 @@
+{
+  "name": "pstack-codex",
+  "interface": {
+    "displayName": "pstack-codex"
+  },
+  "plugins": [
+    {
+      "name": "pstack",
+      "source": {
+        "source": "local",
+        "path": "./pstack-codex"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL",
+        "products": ["CODEX"]
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}
