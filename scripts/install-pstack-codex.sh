@@ -2,7 +2,12 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-# Local Codex marketplace. Catalog is .codex/.agents/plugins/marketplace.json;
-# the plugin itself is .codex/pstack-codex.
-codex plugin marketplace add ./.codex
-codex plugin add pstack@pstack-codex
+# Local sibling checkout when present; otherwise the public GitHub marketplace.
+if [[ -d ../codex-plugins/.agents/plugins ]]; then
+  marketplace="../codex-plugins"
+else
+  marketplace="gannonh/codex-plugins"
+fi
+
+codex plugin marketplace add "$marketplace"
+codex plugin add pstack-codex@codex-plugins

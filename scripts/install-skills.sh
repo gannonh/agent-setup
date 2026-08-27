@@ -17,13 +17,5 @@ npx skills add anthropics/claude-plugins-community --skill eli5 -y --copy --agen
 npx skills add humanlayer/skills --skill show-me -y --copy --agent claude-code cursor
 npx skills add warpdotdev/common-skills --skill skill-doctor -y --copy --agent claude-code cursor
 
-# plugins
-# codex
-codex plugin marketplace add ericlitman/open-pstack --ref main
-codex plugin add pstack@open-pstack
-
-# claude
-claude plugin marketplace add ericlitman/open-pstack --scope project
-claude plugin install pstack@open-pstack --scope project -y
 
 

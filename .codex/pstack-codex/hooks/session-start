@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-# SessionStart hook: print the poteto-mode dispatch mandate to stdout.
-# Codex injects that stdout as session context. A missing context file
-# fails the hook instead of injecting noise.
-
-set -euo pipefail
-
-exec cat "$(cd "$(dirname "$0")" && pwd)/session-start-context.md"
