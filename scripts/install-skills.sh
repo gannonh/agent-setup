@@ -6,6 +6,8 @@ cd "$(dirname "$0")/.."
 npx skills add gannonh/skills --skill plan-build-verify -y --copy --agent claude-code cursor
 npx skills add gannonh/skills --skill thermo-run -y --copy --agent claude-code cursor
 npx skills add gannonh/skills --skill readme -y --copy --agent claude-code cursor
+npx skills add gannonh/skills/pstack-skills -y --agent codex
+
 
 # cursor/plugins
 npx skills add cursor/plugins --skill thermo-nuclear-code-quality-review -y --copy --agent claude-code cursor
