@@ -17,6 +17,7 @@ export async function runScript(opts: {
   packageRoot: string;
   scriptName: string;
   home: string;
+  cwd: string;
   log?: (message: string) => void;
   now?: () => number;
   heartbeatMs?: number;
@@ -33,7 +34,7 @@ export async function runScript(opts: {
   }, opts.heartbeatMs ?? HEARTBEAT_MS);
   timer.unref();
   try {
-    await spawnBash({ script, scriptName: opts.scriptName, cwd: opts.packageRoot, home: opts.home });
+    await spawnBash({ script, scriptName: opts.scriptName, cwd: opts.cwd, home: opts.home });
   } finally {
     clearInterval(timer);
   }

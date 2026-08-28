@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, it } from "node:test";
@@ -25,6 +25,7 @@ describe("runScript", () => {
       packageRoot: root,
       scriptName: "ok.sh",
       home: root,
+      cwd: root,
       log: (message) => {
         logs.push(message);
       },
@@ -41,6 +42,7 @@ describe("runScript", () => {
       packageRoot: root,
       scriptName: "slow.sh",
       home: root,
+      cwd: root,
       heartbeatMs: 50,
       log: (message) => {
         logs.push(message);
@@ -48,5 +50,26 @@ describe("runScript", () => {
     });
     assert.ok(logs.some((line) => line.startsWith("  still working...")));
     assert.ok(logs.some((line) => line.startsWith("  done (")));
+  });
+
+  it("runs the script in the caller's project directory, not the package root", async () => {
+    const pkg = mkdtempSync(join(tmpdir(), "agent-setup-pkg-"));
+    const project = mkdtempSync(join(tmpdir(), "agent-setup-project-"));
+    mkdirSync(join(pkg, "scripts"));
+    writeFileSync(
+      join(pkg, "scripts", "pwd.sh"),
+      `#!/usr/bin/env bash\nprintf '%s\\n' "$PWD" > "${join(project, "cwd.txt")}"\n`,
+    );
+    await runScript({
+      packageRoot: pkg,
+      scriptName: "pwd.sh",
+      home: pkg,
+      cwd: project,
+      log: () => {},
+    });
+    assert.equal(
+      realpathSync(readFileSync(join(project, "cwd.txt"), "utf8").trim()),
+      realpathSync(project),
+    );
   });
 });

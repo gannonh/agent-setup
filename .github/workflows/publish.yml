@@ -1,0 +1,59 @@
+name: Publish npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Explicit version (e.g. 1.2.3). Leave empty to bump patch.
+        required: false
+        type: string
+        default: ""
+
+concurrency:
+  group: publish-npm
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      - run: npm ci
+      - run: npm test
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Bump version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          current="$(node -p "require('./package.json').version")"
+          if [ -n "$VERSION" ]; then
+            if [ "$VERSION" = "$current" ]; then
+              echo "package.json is already $VERSION"
+            else
+              npm version "$VERSION" -m "chore: release %s"
+            fi
+          else
+            npm version patch -m "chore: release %s"
+          fi
+
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - run: git push --follow-tags origin HEAD
