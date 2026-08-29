@@ -1,6 +1,6 @@
 {
   "name": "@gannonh/agent-setup",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Install Codex, Cursor, and Pi agent configs, plugins, and skills",
   "type": "module",
   "bin": {
