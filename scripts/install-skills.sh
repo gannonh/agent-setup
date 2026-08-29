@@ -6,6 +6,8 @@ set -euo pipefail
 npx skills add gannonh/skills --skill plan-build-verify -y --copy --agent claude-code cursor
 npx skills add gannonh/skills --skill thermo-run -y --copy --agent claude-code cursor
 npx skills add gannonh/skills --skill readme -y --copy --agent claude-code cursor
+
+# gannonh/skills/pstack-skills
 npx skills add gannonh/skills/pstack-skills -y --agent codex
 
 # cursor/plugins
