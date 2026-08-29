@@ -16,6 +16,7 @@ function fixture(): { pkg: string; home: string } {
   mkdirSync(home);
   writeFileSync(join(pkg, ".codex", "AGENTS.md"), "codex-src\n");
   writeFileSync(join(pkg, ".cursor", "rules", "global.mdc"), "cursor-src\n");
+  writeFileSync(join(pkg, ".cursor", "rules", "first-party-models.mdc"), "first-party-src\n");
   writeFileSync(join(pkg, ".pi", "agent", "AGENTS.md"), "pi-src\n");
   return { pkg, home };
 }
@@ -53,6 +54,10 @@ describe("install", () => {
     });
     assert.deepEqual(scripts, ["install-pstack-cursor.sh"]);
     assert.equal(readFileSync(join(home, ".cursor", "rules", "global.mdc"), "utf8"), "cursor-src\n");
+    assert.equal(
+      readFileSync(join(home, ".cursor", "rules", "first-party-models.mdc"), "utf8"),
+      "first-party-src\n",
+    );
   });
 
   it("copies ~/.pi/agent/AGENTS.md without installing extensions", async () => {
