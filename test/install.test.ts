@@ -37,7 +37,7 @@ describe("install", () => {
       onConflict: () => "replace",
       log: () => {},
     });
-    assert.deepEqual(scripts, ["install-pstack-claude.sh"]);
+    assert.deepEqual(scripts, ["install-plugins-claude.sh"]);
     assert.equal(readFileSync(join(home, ".claude", "CLAUDE.md"), "utf8"), "claude-src\n");
   });
 
@@ -54,7 +54,7 @@ describe("install", () => {
       onConflict: () => "replace",
       log: () => {},
     });
-    assert.deepEqual(scripts, ["install-pstack-codex.sh"]);
+    assert.deepEqual(scripts, ["install-plugins-codex.sh"]);
     assert.equal(readFileSync(join(home, ".codex", "AGENTS.md"), "utf8"), "codex-src\n");
   });
 
@@ -71,7 +71,7 @@ describe("install", () => {
       onConflict: () => "replace",
       log: () => {},
     });
-    assert.deepEqual(scripts, ["install-pstack-cursor.sh"]);
+    assert.deepEqual(scripts, ["install-plugins-cursor.sh"]);
     assert.equal(readFileSync(join(home, ".cursor", "rules", "global.mdc"), "utf8"), "cursor-src\n");
     assert.equal(
       readFileSync(join(home, ".cursor", "rules", "first-party-models.mdc"), "utf8"),
@@ -211,8 +211,8 @@ describe("install", () => {
       log: () => {},
     });
     assert.deepEqual(scripts, [
-      "install-pstack-codex.sh",
-      "install-pstack-cursor.sh",
+      "install-plugins-codex.sh",
+      "install-plugins-cursor.sh",
       "install-pi-extensions.sh",
       "install-skills.sh",
     ]);

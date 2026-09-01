@@ -36,9 +36,9 @@ npx @gannonh/agent-setup --codex --cursor
 
 | Target | Script | Copy |
 | --- | --- | --- |
-| Claude Code | `scripts/install-pstack-claude.sh` (`claude plugin marketplace add gannonh/open-pstack` / `claude plugin install pstack@open-pstack`) | `.claude/CLAUDE.md` → `~/.claude/CLAUDE.md` |
-| Codex | `scripts/install-pstack-codex.sh` (`codex plugin marketplace add gannonh/open-pstack` / `codex plugin add pstack@open-pstack`) | `.codex` → `~/.codex` |
-| Cursor | `scripts/install-pstack-cursor.sh` (sparse-clones `cursor/plugins` pstack into `~/.cursor/plugins/local/pstack`, sets `enabled_plugins.pstack` in `~/.cursor/settings.json`) | `.cursor/rules` → `~/.cursor/rules` |
+| Claude Code | `scripts/install-plugins-claude.sh` (`claude plugin marketplace add gannonh/open-pstack` / `claude plugin install pstack@open-pstack`) | `.claude/CLAUDE.md` → `~/.claude/CLAUDE.md` |
+| Codex | `scripts/install-plugins-codex.sh` (`codex plugin marketplace add gannonh/open-pstack` / `codex plugin add pstack@open-pstack`) | `.codex` → `~/.codex` |
+| Cursor | `scripts/install-plugins-cursor.sh` (sparse-clones `cursor/plugins` pstack into `~/.cursor/plugins/local/pstack`, sets `enabled_plugins.pstack` in `~/.cursor/settings.json`) | `.cursor/rules` → `~/.cursor/rules` |
 | Pi AGENTS.md | none | `.pi/agent/AGENTS.md` → `~/.pi/agent/AGENTS.md` |
 | Pi extensions | `scripts/install-pi-extensions.sh` (`pi install` for each extension) | none |
 | Skills | `scripts/install-skills.sh` (`npx skills add ... --copy`) | none |

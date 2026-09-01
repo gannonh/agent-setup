@@ -21,9 +21,9 @@ Usage:
 
 Flags can be combined: --codex --cursor
 
-Claude  install-pstack-claude.sh, then copy .claude/CLAUDE.md to ~/.claude/CLAUDE.md
-Codex   install-pstack-codex.sh, then copy .codex to ~/.codex
-Cursor  install-pstack-cursor.sh, then copy .cursor/rules to ~/.cursor/rules
+Claude  install-plugins-claude.sh, then copy .claude/CLAUDE.md to ~/.claude/CLAUDE.md
+Codex   install-plugins-codex.sh, then copy .codex to ~/.codex
+Cursor  install-plugins-cursor.sh, then copy .cursor/rules to ~/.cursor/rules
 Pi      interactive asks AGENTS.md and extensions separately
         --pi copies ~/.pi/agent/AGENTS.md and installs extensions
 Skills  install-skills.sh (interactive and --all)

@@ -18,8 +18,8 @@ export async function install(opts: InstallOpts): Promise<void> {
     switch (target) {
       case "claude":
         log("Claude Code");
-        log("  running install-pstack-claude.sh");
-        await opts.runScript("install-pstack-claude.sh");
+        log("  running install-plugins-claude.sh");
+        await opts.runScript("install-plugins-claude.sh");
         await copyAsset({
           src: join(opts.packageRoot, ".claude", "CLAUDE.md"),
           dest: join(opts.home, ".claude", "CLAUDE.md"),
@@ -29,8 +29,8 @@ export async function install(opts: InstallOpts): Promise<void> {
         break;
       case "codex":
         log("Codex");
-        log("  running install-pstack-codex.sh");
-        await opts.runScript("install-pstack-codex.sh");
+        log("  running install-plugins-codex.sh");
+        await opts.runScript("install-plugins-codex.sh");
         await copyAsset({
           src: join(opts.packageRoot, ".codex"),
           dest: join(opts.home, ".codex"),
@@ -40,8 +40,8 @@ export async function install(opts: InstallOpts): Promise<void> {
         break;
       case "cursor":
         log("Cursor");
-        log("  running install-pstack-cursor.sh");
-        await opts.runScript("install-pstack-cursor.sh");
+        log("  running install-plugins-cursor.sh");
+        await opts.runScript("install-plugins-cursor.sh");
         await copyAsset({
           src: join(opts.packageRoot, ".cursor", "rules"),
           dest: join(opts.home, ".cursor", "rules"),
