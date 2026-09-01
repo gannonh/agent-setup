@@ -16,6 +16,11 @@ export async function install(opts: InstallOpts): Promise<void> {
   const log = opts.log ?? console.log;
   for (const target of opts.targets) {
     switch (target) {
+      case "claude":
+        log("Claude Code");
+        log("  running install-pstack-claude.sh");
+        await opts.runScript("install-pstack-claude.sh");
+        break;
       case "codex":
         log("Codex");
         log("  running install-pstack-codex.sh");

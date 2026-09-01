@@ -22,6 +22,22 @@ function fixture(): { pkg: string; home: string } {
 }
 
 describe("install", () => {
+  it("runs only the Claude script for the claude target", async () => {
+    const { pkg, home } = fixture();
+    const scripts: string[] = [];
+    await install({
+      targets: ["claude"],
+      home,
+      packageRoot: pkg,
+      runScript: (name) => {
+        scripts.push(name);
+      },
+      onConflict: () => "replace",
+      log: () => {},
+    });
+    assert.deepEqual(scripts, ["install-pstack-claude.sh"]);
+  });
+
   it("runs the Codex script then copies ~/.codex", async () => {
     const { pkg, home } = fixture();
     const scripts: string[] = [];

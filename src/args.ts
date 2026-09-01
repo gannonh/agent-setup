@@ -28,6 +28,9 @@ export function parseArgs(argv: string[]): ParsedArgs {
       case "--all":
         all = true;
         break;
+      case "--claude":
+        selected.add("claude");
+        break;
       case "--codex":
         selected.add("codex");
         break;
@@ -49,7 +52,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
   if (selected.size === 0) {
     return {
       kind: "error",
-      message: "No targets selected. Pass --all, --codex, --cursor, --pi, or run with no flags.",
+      message: "No targets selected. Pass --all, --claude, --codex, --cursor, --pi, or run with no flags.",
     };
   }
 

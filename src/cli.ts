@@ -9,17 +9,19 @@ import { createPrompter } from "./prompt.js";
 import { runScript as spawnInstallScript } from "./run-script.js";
 import type { Step } from "./targets.js";
 
-export const HELP = `Install Codex, Cursor, and Pi agent configs, plugins, and skills.
+export const HELP = `Install Claude Code, Codex, Cursor, and Pi agent configs, plugins, and skills.
 
 Usage:
   npx @gannonh/agent-setup              Interactive
-  npx @gannonh/agent-setup --all        Codex, Cursor, Pi, and skills
+  npx @gannonh/agent-setup --all        Claude Code, Codex, Cursor, Pi, and skills
+  npx @gannonh/agent-setup --claude     Claude Code only
   npx @gannonh/agent-setup --codex      Codex only
   npx @gannonh/agent-setup --cursor     Cursor only
   npx @gannonh/agent-setup --pi         Pi AGENTS.md and extensions
 
 Flags can be combined: --codex --cursor
 
+Claude  install-pstack-claude.sh (pstack plugin from gannonh/open-pstack)
 Codex   install-pstack-codex.sh, then copy .codex to ~/.codex
 Cursor  install-pstack-cursor.sh, then copy .cursor/rules to ~/.cursor/rules
 Pi      interactive asks AGENTS.md and extensions separately
@@ -32,6 +34,7 @@ Scripts print progress. Pi extensions can take a few minutes; a heartbeat prints
 
 Options:
   --all          Install everything
+  --claude       Claude Code pstack plugin
   --codex        Codex pstack plugin and ~/.codex
   --cursor       Cursor pstack plugin and ~/.cursor/rules
   --pi           ~/.pi/agent/AGENTS.md and Pi extensions
@@ -96,12 +99,13 @@ async function runInstall(targets: Step[], packageRoot: string): Promise<void> {
 
 async function runInteractive(packageRoot: string): Promise<void> {
   if (!process.stdin.isTTY) {
-    throw new Error("No TTY. Pass --all, --codex, --cursor, or --pi.");
+    throw new Error("No TTY. Pass --all, --claude, --codex, --cursor, or --pi.");
   }
 
   const prompter = createPrompter();
   try {
     const targets: Step[] = [];
+    if (await prompter.confirm("Claude Code (pstack plugin)")) targets.push("claude");
     if (await prompter.confirm("Codex (pstack plugin + ~/.codex)")) targets.push("codex");
     if (await prompter.confirm("Cursor (pstack plugin + ~/.cursor/rules)")) {
       targets.push("cursor");

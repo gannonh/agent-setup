@@ -1,7 +1,7 @@
 {
   "name": "@gannonh/agent-setup",
-  "version": "0.1.6",
-  "description": "Install Codex, Cursor, and Pi agent configs, plugins, and skills",
+  "version": "0.2.0",
+  "description": "Install Claude Code, Codex, Cursor, and Pi agent configs, plugins, and skills",
   "type": "module",
   "bin": {
     "agent-setup": "./dist/cli.js"

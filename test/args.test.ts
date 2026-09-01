@@ -13,6 +13,7 @@ describe("parseArgs", () => {
   });
 
   it("parses a single target flag", () => {
+    assert.deepEqual(parseArgs(["--claude"]), { kind: "install", targets: ["claude"] });
     assert.deepEqual(parseArgs(["--codex"]), { kind: "install", targets: ["codex"] });
     assert.deepEqual(parseArgs(["--cursor"]), { kind: "install", targets: ["cursor"] });
   });
@@ -28,6 +29,10 @@ describe("parseArgs", () => {
     assert.deepEqual(parseArgs(["--pi", "--codex"]), {
       kind: "install",
       targets: ["codex", "pi-agents", "pi-extensions"],
+    });
+    assert.deepEqual(parseArgs(["--codex", "--claude"]), {
+      kind: "install",
+      targets: ["claude", "codex"],
     });
   });
 
