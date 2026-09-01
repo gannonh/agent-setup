@@ -36,7 +36,7 @@ npx @gannonh/agent-setup --codex --cursor
 
 | Target | Script | Copy |
 | --- | --- | --- |
-| Claude Code | `scripts/install-pstack-claude.sh` (`claude plugin marketplace add gannonh/open-pstack` / `claude plugin install pstack@open-pstack`) | nothing copied |
+| Claude Code | `scripts/install-pstack-claude.sh` (`claude plugin marketplace add gannonh/open-pstack` / `claude plugin install pstack@open-pstack`) | `.claude/CLAUDE.md` → `~/.claude/CLAUDE.md` |
 | Codex | `scripts/install-pstack-codex.sh` (`codex plugin marketplace add gannonh/open-pstack` / `codex plugin add pstack@open-pstack`) | `.codex` → `~/.codex` |
 | Cursor | `scripts/install-pstack-cursor.sh` (sparse-clones `cursor/plugins` pstack into `~/.cursor/plugins/local/pstack`, sets `enabled_plugins.pstack` in `~/.cursor/settings.json`) | `.cursor/rules` → `~/.cursor/rules` |
 | Pi AGENTS.md | none | `.pi/agent/AGENTS.md` → `~/.pi/agent/AGENTS.md` |
@@ -47,7 +47,7 @@ Replace overwrites the files this package ships. Append concatenates this packag
 
 ## Undo
 
-`scripts/remove-pstack-codex.sh` removes the Codex pstack plugin, marketplace entries, and leftover `config.toml` tables. Claude Code: `claude plugin uninstall pstack@open-pstack` and `claude plugin marketplace remove open-pstack`; your `~/.claude/pstack-models.md` sheet and `~/.claude/CLAUDE.md` include survive uninstall.
+`scripts/remove-pstack-codex.sh` removes the Codex pstack plugin, marketplace entries, and leftover `config.toml` tables. Claude Code: `claude plugin uninstall pstack@open-pstack` and `claude plugin marketplace remove open-pstack`; delete `~/.claude/CLAUDE.md` if you do not want the copied instructions.
 
 Copied files: delete `~/.codex`, `~/.cursor/rules`, `~/.pi/agent/AGENTS.md` (or the individual files you do not want). Cursor pstack: remove `enabled_plugins.pstack` from `~/.cursor/settings.json` and delete `~/.cursor/plugins/local/pstack`. Pi extensions and skills stay until you uninstall them with `pi` / `npx skills`.
 

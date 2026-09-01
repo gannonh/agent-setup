@@ -10,10 +10,12 @@ function fixture(): { pkg: string; home: string } {
   const root = mkdtempSync(join(tmpdir(), "agent-setup-install-"));
   const pkg = join(root, "pkg");
   const home = join(root, "home");
+  mkdirSync(join(pkg, ".claude"), { recursive: true });
   mkdirSync(join(pkg, ".codex"), { recursive: true });
   mkdirSync(join(pkg, ".cursor", "rules"), { recursive: true });
   mkdirSync(join(pkg, ".pi", "agent"), { recursive: true });
   mkdirSync(home);
+  writeFileSync(join(pkg, ".claude", "CLAUDE.md"), "claude-src\n");
   writeFileSync(join(pkg, ".codex", "AGENTS.md"), "codex-src\n");
   writeFileSync(join(pkg, ".cursor", "rules", "global.mdc"), "cursor-src\n");
   writeFileSync(join(pkg, ".cursor", "rules", "first-party-models.mdc"), "first-party-src\n");
@@ -22,7 +24,7 @@ function fixture(): { pkg: string; home: string } {
 }
 
 describe("install", () => {
-  it("runs only the Claude script for the claude target", async () => {
+  it("runs the Claude script then copies ~/.claude/CLAUDE.md", async () => {
     const { pkg, home } = fixture();
     const scripts: string[] = [];
     await install({
@@ -36,6 +38,7 @@ describe("install", () => {
       log: () => {},
     });
     assert.deepEqual(scripts, ["install-pstack-claude.sh"]);
+    assert.equal(readFileSync(join(home, ".claude", "CLAUDE.md"), "utf8"), "claude-src\n");
   });
 
   it("runs the Codex script then copies ~/.codex", async () => {

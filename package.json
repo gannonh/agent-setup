@@ -9,6 +9,7 @@
   "files": [
     "dist",
     "scripts",
+    ".claude/CLAUDE.md",
     ".codex",
     ".cursor/rules",
     ".pi"

@@ -11,9 +11,15 @@ describe("findPackageRoot", () => {
   });
 });
 
-describe("cursor rules package", () => {
-  it("ships first-party-models.mdc so --cursor copies it to ~/.cursor/rules", () => {
+describe("shipped assets", () => {
+  it("ships the cursor rules --cursor copies to ~/.cursor/rules", () => {
     const root = findPackageRoot();
-    assert.equal(existsSync(join(root, ".cursor", "rules", "first-party-models.mdc")), true);
+    assert.equal(existsSync(join(root, ".cursor", "rules", "global.mdc")), true);
+    assert.equal(existsSync(join(root, ".cursor", "rules", "pstack-models.mdc")), true);
+  });
+
+  it("ships the CLAUDE.md --claude copies to ~/.claude", () => {
+    const root = findPackageRoot();
+    assert.equal(existsSync(join(root, ".claude", "CLAUDE.md")), true);
   });
 });

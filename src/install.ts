@@ -20,6 +20,12 @@ export async function install(opts: InstallOpts): Promise<void> {
         log("Claude Code");
         log("  running install-pstack-claude.sh");
         await opts.runScript("install-pstack-claude.sh");
+        await copyAsset({
+          src: join(opts.packageRoot, ".claude", "CLAUDE.md"),
+          dest: join(opts.home, ".claude", "CLAUDE.md"),
+          onConflict: opts.onConflict,
+          log,
+        });
         break;
       case "codex":
         log("Codex");

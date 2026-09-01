@@ -21,7 +21,7 @@ Usage:
 
 Flags can be combined: --codex --cursor
 
-Claude  install-pstack-claude.sh (pstack plugin from gannonh/open-pstack)
+Claude  install-pstack-claude.sh, then copy .claude/CLAUDE.md to ~/.claude/CLAUDE.md
 Codex   install-pstack-codex.sh, then copy .codex to ~/.codex
 Cursor  install-pstack-cursor.sh, then copy .cursor/rules to ~/.cursor/rules
 Pi      interactive asks AGENTS.md and extensions separately
@@ -34,7 +34,7 @@ Scripts print progress. Pi extensions can take a few minutes; a heartbeat prints
 
 Options:
   --all          Install everything
-  --claude       Claude Code pstack plugin
+  --claude       Claude Code pstack plugin and ~/.claude/CLAUDE.md
   --codex        Codex pstack plugin and ~/.codex
   --cursor       Cursor pstack plugin and ~/.cursor/rules
   --pi           ~/.pi/agent/AGENTS.md and Pi extensions
@@ -105,7 +105,7 @@ async function runInteractive(packageRoot: string): Promise<void> {
   const prompter = createPrompter();
   try {
     const targets: Step[] = [];
-    if (await prompter.confirm("Claude Code (pstack plugin)")) targets.push("claude");
+    if (await prompter.confirm("Claude Code (pstack plugin + ~/.claude/CLAUDE.md)")) targets.push("claude");
     if (await prompter.confirm("Codex (pstack plugin + ~/.codex)")) targets.push("codex");
     if (await prompter.confirm("Cursor (pstack plugin + ~/.cursor/rules)")) {
       targets.push("cursor");
