@@ -91,7 +91,6 @@ NODE
 test -d "$RULES_SRC"
 mkdir -p "$RULES_DST"
 cp "$RULES_SRC/pstack-models.mdc" "$RULES_DST/pstack-models.mdc"
-cp "$RULES_SRC/first-party-models.mdc" "$RULES_DST/first-party-models.mdc"
 
 echo "cursor pstack -> $PSTACK_DST ($sha)"
 echo "cursor pstack models -> $RULES_DST"
