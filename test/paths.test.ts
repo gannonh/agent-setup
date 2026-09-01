@@ -18,6 +18,11 @@ describe("shipped assets", () => {
     assert.equal(existsSync(join(root, ".cursor", "rules", "pstack-models.mdc")), true);
   });
 
+  it("ships the cursor plugin manifest the install script reads", () => {
+    const root = findPackageRoot();
+    assert.equal(existsSync(join(root, "scripts", "plugins-cursor.toml")), true);
+  });
+
   it("ships the CLAUDE.md --claude copies to ~/.claude", () => {
     const root = findPackageRoot();
     assert.equal(existsSync(join(root, ".claude", "CLAUDE.md")), true);

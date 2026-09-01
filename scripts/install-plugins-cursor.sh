@@ -1,74 +1,66 @@
 #!/usr/bin/env bash
-# Install official Cursor pstack into ~/.cursor/plugins/local (no marketplace CLI).
-# Override dest with PSTACK_DST=...
+# Install the Cursor plugins listed in plugins-cursor.toml.
+# Cursor's CLI manages marketplaces but cannot install plugins, so each entry
+# is sparse-cloned into ~/.cursor/plugins/local/<name> and registered under
+# enabled_plugins in ~/.cursor/settings.json (the documented local-plugin
+# mechanism). Restart Cursor or run "Developer: Reload Window" to pick them up.
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-PSTACK_DST="${PSTACK_DST:-${HOME}/.cursor/plugins/local/pstack}"
+SCRIPTS_DIR="$(cd "$(dirname "$0")" && pwd)"
+MANIFEST="$SCRIPTS_DIR/plugins-cursor.toml"
+LOCAL_DIR="${HOME}/.cursor/plugins/local"
 SETTINGS="${HOME}/.cursor/settings.json"
-RULES_SRC="$ROOT/.cursor/rules"
-RULES_DST="${HOME}/.cursor/rules"
 
 tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 
-git -C "$tmp" init -q
-git -C "$tmp" remote add origin https://github.com/cursor/plugins.git
-git -C "$tmp" sparse-checkout init --cone
-git -C "$tmp" sparse-checkout set pstack
-git -C "$tmp" fetch -q --depth 1 origin main
-git -C "$tmp" checkout -q FETCH_HEAD
-sha="$(git -C "$tmp" rev-parse --short HEAD)"
-test -f "$tmp/pstack/.cursor-plugin/plugin.json"
+# Parse the [[plugin]] tables (name/repo/path/ref string keys) into TSV.
+MANIFEST="$MANIFEST" node > "$tmp/entries.tsv" <<'NODE'
+const { readFileSync } = require("fs");
+const text = readFileSync(process.env.MANIFEST, "utf8");
+const blocks = text.split(/^\[\[plugin\]\]\s*$/m).slice(1);
+if (blocks.length === 0) throw new Error("no [[plugin]] tables in manifest");
+for (const block of blocks) {
+  const entry = {};
+  for (const line of block.split("\n")) {
+    const m = line.match(/^\s*(name|repo|path|ref)\s*=\s*"([^"]*)"\s*(#.*)?$/);
+    if (m) entry[m[1]] = m[2];
+  }
+  for (const key of ["name", "repo", "path"]) {
+    if (!entry[key]) throw new Error(`plugin entry missing ${key}`);
+  }
+  if (!/^[a-z0-9][a-z0-9-]*$/.test(entry.name)) {
+    throw new Error(`plugin name must be lowercase letters, digits, hyphens: ${entry.name}`);
+  }
+  console.log([entry.name, entry.repo, entry.path, entry.ref || "main"].join("\t"));
+}
+NODE
 
-mkdir -p "$(dirname "$PSTACK_DST")"
-rm -rf "$PSTACK_DST"
-cp -R "$tmp/pstack" "$PSTACK_DST"
+names=()
+while IFS=$'\t' read -r name repo path ref; do
+  checkout="$tmp/$name"
+  git init -q "$checkout"
+  git -C "$checkout" remote add origin "$repo"
+  git -C "$checkout" sparse-checkout init --cone
+  git -C "$checkout" sparse-checkout set "$path"
+  git -C "$checkout" fetch -q --depth 1 origin "$ref"
+  git -C "$checkout" checkout -q FETCH_HEAD
+  sha="$(git -C "$checkout" rev-parse --short HEAD)"
+  src="$checkout/$path"
+  if [[ ! -f "$src/.cursor-plugin/plugin.json" && ! -f "$src/plugin.json" ]]; then
+    echo "error: $repo $path has no plugin manifest" >&2
+    exit 1
+  fi
+  mkdir -p "$LOCAL_DIR"
+  rm -rf "${LOCAL_DIR:?}/$name"
+  cp -R "$src" "$LOCAL_DIR/$name"
+  echo "cursor plugin $name -> $LOCAL_DIR/$name ($sha)"
+  names+=("$name")
+done < "$tmp/entries.tsv"
 
-# Upstream skill defaults name Claude/GPT. Rewrite to Cursor Models so Task
-# fallbacks stay on Grok/Composer. Re-applied on every install.
-python3 - "$PSTACK_DST" <<'PY'
-from pathlib import Path
-import sys
-root = Path(sys.argv[1])
-subs = [
-    ("claude-fable-5-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh",
-     "cursor-grok-4.6-xhigh, composer-2.5-fast, cursor-grok-4.5-high-fast, composer-2.5-fast"),
-    ("claude-fable-5-thinking-max", "cursor-grok-4.6-xhigh"),
-    ("gpt-5.6-sol-max", "composer-2.5-fast"),
-    ("claude-opus-5-thinking-xhigh", "cursor-grok-4.5-high-fast"),
-    ("grok-4.6-fast-xhigh", "cursor-grok-4.6-xhigh"),
-]
-stale = (
-    "claude-fable-5-thinking-max",
-    "gpt-5.6-sol-max",
-    "claude-opus-5-thinking-xhigh",
-    "grok-4.6-fast-xhigh",
-)
-missed = []
-for path in root.rglob("*"):
-    if not path.is_file() or path.suffix not in {".md", ".mdc", ".mjs", ".ts", ".txt"}:
-        continue
-    try:
-        text = path.read_text()
-    except (OSError, UnicodeDecodeError):
-        continue
-    new = text
-    for a, b in subs:
-        new = new.replace(a, b)
-    if new != text:
-        path.write_text(new)
-        text = new
-    if any(s in text for s in stale):
-        missed.append(str(path))
-if missed:
-    raise SystemExit("pstack rewrite left third-party skill defaults:\n" + "\n".join(missed))
-PY
-
-PSTACK_DST="$PSTACK_DST" SETTINGS="$SETTINGS" node <<'NODE'
+PLUGIN_NAMES="${names[*]}" LOCAL_DIR="$LOCAL_DIR" SETTINGS="$SETTINGS" node <<'NODE'
 const fs = require("fs");
 const path = require("path");
-const dst = process.env.PSTACK_DST;
 const file = process.env.SETTINGS;
 let data = {};
 try {
@@ -83,14 +75,11 @@ const plugins =
   data.enabled_plugins && typeof data.enabled_plugins === "object" && !Array.isArray(data.enabled_plugins)
     ? data.enabled_plugins
     : {};
-data.enabled_plugins = { ...plugins, pstack: { path: dst } };
+for (const name of process.env.PLUGIN_NAMES.split(" ").filter(Boolean)) {
+  plugins[name] = { path: `${process.env.LOCAL_DIR}/${name}` };
+}
+data.enabled_plugins = plugins;
 fs.mkdirSync(path.dirname(file), { recursive: true });
 fs.writeFileSync(file, JSON.stringify(data, null, 2) + "\n");
 NODE
-
-test -d "$RULES_SRC"
-mkdir -p "$RULES_DST"
-cp "$RULES_SRC/pstack-models.mdc" "$RULES_DST/pstack-models.mdc"
-
-echo "cursor pstack -> $PSTACK_DST ($sha)"
-echo "cursor pstack models -> $RULES_DST"
+echo "cursor enabled_plugins -> $SETTINGS"

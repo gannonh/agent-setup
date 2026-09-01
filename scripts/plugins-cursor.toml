@@ -1,0 +1,12 @@
+# Cursor plugins installed by install-plugins-cursor.sh.
+# Each [[plugin]] is a subdirectory of a git repo, string values only:
+#   name  directory under ~/.cursor/plugins/local (lowercase letters, digits, hyphens)
+#   repo  git URL
+#   path  subdirectory containing the plugin manifest
+#   ref   branch, tag, or commit (optional, default "main")
+
+[[plugin]]
+name = "pstack"
+repo = "https://github.com/cursor/plugins.git"
+path = "pstack"
+ref = "main"

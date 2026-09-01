@@ -38,10 +38,12 @@ npx @gannonh/agent-setup --codex --cursor
 | --- | --- | --- |
 | Claude Code | `scripts/install-plugins-claude.sh` (`claude plugin marketplace add gannonh/open-pstack` / `claude plugin install pstack@open-pstack`) | `.claude/CLAUDE.md` → `~/.claude/CLAUDE.md` |
 | Codex | `scripts/install-plugins-codex.sh` (`codex plugin marketplace add gannonh/open-pstack` / `codex plugin add pstack@open-pstack`) | `.codex` → `~/.codex` |
-| Cursor | `scripts/install-plugins-cursor.sh` (sparse-clones `cursor/plugins` pstack into `~/.cursor/plugins/local/pstack`, sets `enabled_plugins.pstack` in `~/.cursor/settings.json`) | `.cursor/rules` → `~/.cursor/rules` |
+| Cursor | `scripts/install-plugins-cursor.sh` (installs each entry in `scripts/plugins-cursor.toml`: sparse-clones the repo subdirectory into `~/.cursor/plugins/local/<name>` and registers it in `enabled_plugins` in `~/.cursor/settings.json`; Cursor has no CLI install command) | `.cursor/rules` → `~/.cursor/rules` |
 | Pi AGENTS.md | none | `.pi/agent/AGENTS.md` → `~/.pi/agent/AGENTS.md` |
 | Pi extensions | `scripts/install-pi-extensions.sh` (`pi install` for each extension) | none |
 | Skills | `scripts/install-skills.sh` (`npx skills add ... --copy`) | none |
+
+To install another Cursor plugin, add a `[[plugin]]` table (name, repo, path, optional ref) to `scripts/plugins-cursor.toml`. Restart Cursor after installing.
 
 Replace overwrites the files this package ships. Append concatenates this package's content onto the existing file (or, for directories, onto matching files and copies files that are missing). Skip leaves the dest as-is.
 
@@ -49,7 +51,7 @@ Replace overwrites the files this package ships. Append concatenates this packag
 
 `scripts/remove-pstack-codex.sh` removes the Codex pstack plugin, marketplace entries, and leftover `config.toml` tables. Claude Code: `claude plugin uninstall pstack@open-pstack` and `claude plugin marketplace remove open-pstack`; delete `~/.claude/CLAUDE.md` if you do not want the copied instructions.
 
-Copied files: delete `~/.codex`, `~/.cursor/rules`, `~/.pi/agent/AGENTS.md` (or the individual files you do not want). Cursor pstack: remove `enabled_plugins.pstack` from `~/.cursor/settings.json` and delete `~/.cursor/plugins/local/pstack`. Pi extensions and skills stay until you uninstall them with `pi` / `npx skills`.
+Copied files: delete `~/.codex`, `~/.cursor/rules`, `~/.pi/agent/AGENTS.md` (or the individual files you do not want). Cursor plugins: remove the entry from `enabled_plugins` in `~/.cursor/settings.json` and delete `~/.cursor/plugins/local/<name>`. Pi extensions and skills stay until you uninstall them with `pi` / `npx skills`.
 
 ## License
 
