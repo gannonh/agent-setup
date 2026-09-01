@@ -10,3 +10,9 @@ name = "pstack"
 repo = "https://github.com/cursor/plugins.git"
 path = "pstack"
 ref = "main"
+
+[[plugin]]
+name = "thermos"
+repo = "https://github.com/cursor/plugins.git"
+path = "thermos"
+ref = "main"
