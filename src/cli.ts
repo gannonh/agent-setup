@@ -18,7 +18,6 @@ Usage:
   npx @gannonh/agent-setup --codex      Codex only
   npx @gannonh/agent-setup --cursor     Cursor only
   npx @gannonh/agent-setup --pi         Pi AGENTS.md and extensions
-  npx @gannonh/agent-setup --skills     Skills only
 
 Flags can be combined: --codex --cursor
 
@@ -27,7 +26,7 @@ Codex   install-plugins-codex.sh, then copy .codex to ~/.codex
 Cursor  install-plugins-cursor.sh, then copy .cursor/rules to ~/.cursor/rules
 Pi      interactive asks AGENTS.md and extensions separately
         --pi copies ~/.pi/agent/AGENTS.md and installs extensions
-Skills  install-skills.sh (into the current directory)
+Skills  install-skills.sh (interactive and --all)
 
 Existing dest files: interactive lists the files this package would write, then asks replace (overwrite those files), append (add this package's content to the end), or skip.
 Non-interactive flags replace files this package ships and leave other files in place.
@@ -39,7 +38,6 @@ Options:
   --codex        Codex pstack plugin and ~/.codex
   --cursor       Cursor pstack plugin and ~/.cursor/rules
   --pi           ~/.pi/agent/AGENTS.md and Pi extensions
-  --skills       Skills only
   -h, --help     Show this help
   -v, --version  Print version
 `;
@@ -101,7 +99,7 @@ async function runInstall(targets: Step[], packageRoot: string): Promise<void> {
 
 async function runInteractive(packageRoot: string): Promise<void> {
   if (!process.stdin.isTTY) {
-    throw new Error("No TTY. Pass --all, --claude, --codex, --cursor, --pi, or --skills.");
+    throw new Error("No TTY. Pass --all, --claude, --codex, --cursor, or --pi.");
   }
 
   const prompter = createPrompter();

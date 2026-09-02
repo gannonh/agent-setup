@@ -13,7 +13,6 @@ Usage:
   npx @gannonh/agent-setup --codex      Codex only
   npx @gannonh/agent-setup --cursor     Cursor only
   npx @gannonh/agent-setup --pi         Pi AGENTS.md and extensions
-  npx @gannonh/agent-setup --skills     Skills only
 ```
 
 Node 20+ on macOS or Linux. `npx` downloads the package, then the CLI writes under `$HOME` and runs bash scripts that call `claude`, `codex`, `git`, `pi`, and `npx` for the targets you pick.
@@ -28,11 +27,10 @@ npx @gannonh/agent-setup --claude
 npx @gannonh/agent-setup --codex
 npx @gannonh/agent-setup --cursor
 npx @gannonh/agent-setup --pi
-npx @gannonh/agent-setup --skills
 npx @gannonh/agent-setup --codex --cursor
 ```
 
-`--all` installs Claude Code, Codex, Cursor, Pi AGENTS.md, Pi extensions, and skills. Target flags can be combined. `--pi` installs both Pi AGENTS.md and extensions. `--skills` runs `install-skills.sh` only, and `npx skills add` writes into the directory you ran from. Non-interactive flags replace files this package ships and leave other files in the dest directory. While a script runs, the CLI prints what it is doing and a heartbeat every 10s. Pi extensions often take a few minutes.
+`--all` installs Claude Code, Codex, Cursor, Pi AGENTS.md, Pi extensions, and skills. Target flags can be combined. `--pi` installs both Pi AGENTS.md and extensions. There is no `--skills` flag; use interactive or `--all`. Non-interactive flags replace files this package ships and leave other files in the dest directory. While a script runs, the CLI prints what it is doing and a heartbeat every 10s. Pi extensions often take a few minutes.
 
 ## What it writes
 
@@ -43,7 +41,7 @@ npx @gannonh/agent-setup --codex --cursor
 | Cursor | `scripts/install-plugins-cursor.sh` (installs each entry in `scripts/plugins-cursor.toml`: sparse-clones the repo subdirectory into `~/.cursor/plugins/local/<name>` and registers it in `enabled_plugins` in `~/.cursor/settings.json`; Cursor has no CLI install command) | `.cursor/rules` → `~/.cursor/rules` |
 | Pi AGENTS.md | none | `.pi/agent/AGENTS.md` → `~/.pi/agent/AGENTS.md` |
 | Pi extensions | `scripts/install-pi-extensions.sh` (`pi install` for each extension) | none |
-| Skills | `scripts/install-skills.sh` (`npx skills add ... --copy` in the current directory) | none |
+| Skills | `scripts/install-skills.sh` (`npx skills add ... --copy`) | none |
 
 To install another Cursor plugin, add a `[[plugin]]` table (name, repo, path, optional ref) to `scripts/plugins-cursor.toml`. Restart Cursor after installing.
 
@@ -51,7 +49,7 @@ Replace overwrites the files this package ships. Append concatenates this packag
 
 ## Undo
 
-Codex: `codex plugin remove pstack@open-pstack` and `codex plugin marketplace remove open-pstack`. Claude Code: `claude plugin uninstall pstack@open-pstack` and `claude plugin marketplace remove open-pstack`; delete `~/.claude/CLAUDE.md` if you do not want the copied instructions.
+`scripts/remove-pstack-codex.sh` removes the Codex pstack plugin, marketplace entries, and leftover `config.toml` tables. Claude Code: `claude plugin uninstall pstack@open-pstack` and `claude plugin marketplace remove open-pstack`; delete `~/.claude/CLAUDE.md` if you do not want the copied instructions.
 
 Copied files: delete `~/.codex`, `~/.cursor/rules`, `~/.pi/agent/AGENTS.md` (or the individual files you do not want). Cursor plugins: remove the entry from `enabled_plugins` in `~/.cursor/settings.json` and delete `~/.cursor/plugins/local/<name>`. Pi extensions and skills stay until you uninstall them with `pi` / `npx skills`.
 
