@@ -197,6 +197,26 @@ describe("install", () => {
     assert.equal(called, false);
   });
 
+  it("runs install-skills.sh for skills only", async () => {
+    const { pkg, home } = fixture();
+    const scripts: string[] = [];
+    await install({
+      targets: ["skills"],
+      home,
+      packageRoot: pkg,
+      runScript: (name) => {
+        scripts.push(name);
+      },
+      onConflict: () => "replace",
+      log: () => {},
+    });
+    assert.deepEqual(scripts, ["install-skills.sh"]);
+    assert.equal(existsSync(join(home, ".claude", "CLAUDE.md")), false);
+    assert.equal(existsSync(join(home, ".codex")), false);
+    assert.equal(existsSync(join(home, ".cursor")), false);
+    assert.equal(existsSync(join(home, ".pi")), false);
+  });
+
   it("runs --all in Codex, Cursor, Pi AGENTS.md, Pi extensions, skills order", async () => {
     const { pkg, home } = fixture();
     const scripts: string[] = [];

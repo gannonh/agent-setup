@@ -41,6 +41,9 @@ export function parseArgs(argv: string[]): ParsedArgs {
         selected.add("pi-agents");
         selected.add("pi-extensions");
         break;
+      case "--skills":
+        selected.add("skills");
+        break;
       default:
         return { kind: "error", message: `Unknown option: ${arg}` };
     }
@@ -52,7 +55,7 @@ export function parseArgs(argv: string[]): ParsedArgs {
   if (selected.size === 0) {
     return {
       kind: "error",
-      message: "No targets selected. Pass --all, --claude, --codex, --cursor, --pi, or run with no flags.",
+      message: "No targets selected. Pass --all, --claude, --codex, --cursor, --pi, --skills, or run with no flags.",
     };
   }
 
