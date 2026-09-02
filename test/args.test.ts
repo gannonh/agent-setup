@@ -16,6 +16,7 @@ describe("parseArgs", () => {
     assert.deepEqual(parseArgs(["--claude"]), { kind: "install", targets: ["claude"] });
     assert.deepEqual(parseArgs(["--codex"]), { kind: "install", targets: ["codex"] });
     assert.deepEqual(parseArgs(["--cursor"]), { kind: "install", targets: ["cursor"] });
+    assert.deepEqual(parseArgs(["--skills"]), { kind: "install", targets: ["skills"] });
   });
 
   it("parses --pi as AGENTS.md and extensions", () => {
@@ -33,6 +34,10 @@ describe("parseArgs", () => {
     assert.deepEqual(parseArgs(["--codex", "--claude"]), {
       kind: "install",
       targets: ["claude", "codex"],
+    });
+    assert.deepEqual(parseArgs(["--skills", "--codex"]), {
+      kind: "install",
+      targets: ["codex", "skills"],
     });
   });
 
@@ -54,10 +59,10 @@ describe("parseArgs", () => {
   });
 
   it("rejects unknown options", () => {
-    const parsed = parseArgs(["--skills"]);
+    const parsed = parseArgs(["--foo"]);
     assert.equal(parsed.kind, "error");
     if (parsed.kind === "error") {
-      assert.match(parsed.message, /Unknown option: --skills/);
+      assert.match(parsed.message, /Unknown option: --foo/);
     }
   });
 });
