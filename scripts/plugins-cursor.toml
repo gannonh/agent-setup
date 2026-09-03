@@ -16,3 +16,9 @@ name = "thermos"
 repo = "https://github.com/cursor/plugins.git"
 path = "thermos"
 ref = "main"
+
+[[plugin]]
+name = "plan-build-verify"
+repo = "https://github.com/gannonh/plan-build-verify.git"
+path = "plugins/cursor"
+ref = "main"
