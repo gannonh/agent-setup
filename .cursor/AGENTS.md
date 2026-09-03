@@ -42,21 +42,23 @@ If the skill is unavailable in this environment, install it with...
 
 Provider-qualified per-role choices. Read the installed pstack provider-dispatch reference before dispatching a configured role. Every documented role remains present. `inherit-parent` and `auto` use the parent model natively and still count as one panel lane.
 
-feature, refactoring: cursor:cursor-grok-4.6@xhigh
-bug-fix: codex:gpt-5.6-sol@max
-perf-issue: codex:gpt-5.6-sol@max
-hillclimb: codex:gpt-5.6-sol@max
-judgment and prose: claude:claude-fable-5@max
-hardest tasks: claude:claude-fable-5@max
-how explorer: cursor:cursor-grok-4.6@xhigh
-how explainer: claude:claude-fable-5@max
-how critics: claude:claude-fable-5@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-why investigators, synthesizer: inherit-parent
-reflect tooling, judgment, divergent, synthesizer: inherit-parent
-arena runners: claude:claude-fable-5@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-arena cross-judge pool: claude:claude-fable-5@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-swarm workers: cursor:cursor-grok-4.6@xhigh
-architect runners: claude:claude-fable-5@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-interrogate reviewers: claude:claude-fable-5@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
+feature, refactoring: cursor-grok-4.6-xhigh
+bug-fix: claude-fable-5-1-thinking-xhigh
+perf-issue: claude-fable-5-1-thinking-xhigh
+hillclimb: claude-fable-5-1-thinking-xhigh
+judgment and prose: claude-fable-5-1-thinking-xhigh
+hardest tasks: claude-fable-5-1-thinking-xhigh
+how explorer: cursor-grok-4.6-xhigh
+how explainer: claude-fable-5-1-thinking-xhigh
+how critics: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
+why investigators: cursor-grok-4.6-xhigh
+why synthesizer: claude-fable-5-1-thinking-xhigh
+reflect tooling: claude-fable-5-1-thinking-xhigh
+reflect judgment, divergent, synthesizer: claude-fable-5-1-thinking-xhigh
+arena runners: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
+arena cross-judge pool: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
+swarm workers: cursor-grok-4.6-xhigh
+architect runners: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
+interrogate reviewers: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
 <!-- pstack:models:end -->
 
