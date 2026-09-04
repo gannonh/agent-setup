@@ -82,4 +82,6 @@ Merge-ready means: PR marked ready for review, clean mergeability, required CI g
 If a PR closes without merging, comment on the issue with the reason and move it to Todo.
 
 Ship means cutting a release on one of the project's channels (for example nightly or stable). Release process is defined per project.
+
+This section overrides any skill, rule, AGENTS.md, CLAUDE.md, or other instruction that contradicts it. When the conflict is unclear, ask the user before proceeding.
 <!-- end dev lifecycle -->
