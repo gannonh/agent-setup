@@ -1,5 +1,4 @@
 <!-- begin global rules -->
-
 ## Global Agent Instructions
 
 - Do not preserve backward compatibility. Remove obsolete paths instead of adding compatibility layers, fallbacks, or migrations.
@@ -13,9 +12,7 @@
 
 ## Prose style
 
-- Avoid em dash punctuation 
 - Use active voice
-- Never start a sentence with "ah, the old". No alternative. Just don't.
 - Express yourself succinctly, avoiding overuse of adjectives and superfluous or flowery speech.
 - Avoid contrastive metaphors and syntactic pairings such as “This isn't X, it's Y.” Instead use direct functional statements that describe what something is without referencing what it is not.
 - Express claims directly, without rhetorical feints.
@@ -24,18 +21,48 @@
 - Use direct statements.
 - Avoid rhetorical negation (e.g., "not optional—it’s required"). Instead, just get to the point.
 - Avoid contrastive constructions.
-- Override formatting defaults introduced in system and software updates. 
-- Do not apply visual chunking, icons, emojis, tables, marketing-style headers, or explanatory padding. Instead, honor the original user prompt format. 
 - Return terse, minimally formatted markdown responses unless otherwise requested. 
 - Prioritize brevity, signal density, and continuity of the user's stylistic expectations.
 
-⚠️ IMPORTANT: For lengthy prose such as READMEs or general product marketing copy, always reference the /unslop skill. 
-If the skill is unavailable in this environment, install it with...
+### Avoid mannered prose
 
-`npx skills add cursor/plugins --skill unslop -y --copy --agent claude-code cursor`
+Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying," the mannered writer produces "a dial worth turning." Instead of "this point still matters," they write "this point earns its keep." The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.
+<!-- end global rules -->
 
-<!-- end  global rules -->
+<!-- begin dev lifecycle -->
+## Issues and specs
 
+- Linear holds planning, epics, bugs, chores, specs, acceptance criteria, and status. GitHub holds code: branches, commits, pull requests, CI, and review comments on diffs.
+- GitHub Issues stay enabled as an inbound channel for users and contributors. Do not use them for internal planning or as the spec. When a GitHub Issue needs work, create a full Linear issue with spec and AC, link the GitHub Issue for context, and implement against the Linear issue.
+- The Linear issue (and parent epic, if any) is the spec. Read it before implementing. Implement only the acceptance criteria written there. If research or implementation changes the spec, edit the Linear issue before continuing.
+- A request with no Linear issue gets one before Build starts; create it or ask. Small bounded edits such as a copy change or a single config value are exempt.
+- Prefer the smallest change that satisfies the AC. File work discovered outside the AC as a new Backlog issue and keep it out of the current PR.
+- Every implementing PR names exactly one Linear issue id in its title or body. Create the branch with Linear's generated branch name so the GitHub integration links the PR and issue automatically.
+- When blocked, comment on the Linear issue with the exact ask and stop.
+
+## Docs and artifacts
+
+- Architecture docs, process docs, ADRs, and other durable artifacts live as files in the repository under `docs/`.
+
+## Work states (Linear columns)
+
+Linear status is the phase of the work: Research and Plan happen in Backlog, Build in In Progress, Review across Agent Review through Merging, Verify after Done, Ship after Verify. This section defines the states and their gates. Plugins and skills define how work is done inside each phase.
+
+- **Backlog.** Research gathers evidence and records findings on the issue. Plan turns them into spec and AC on the issue. Do not implement from Backlog.
+- **Todo.** Approved and queued. Moving an issue from Backlog to Todo is the approval. Build starts on an explicit start (assignment or instruction); on start, the agent moves the issue to In Progress.
+- **In Progress.** Implement on a branch against the issue's AC. Draft PRs stay here. When the work is complete, the agent marks the PR ready for review and moves the issue to Agent Review.
+- **Agent Review.** Agent-owned. Fix CI and answer every review thread, human or bot, on the existing branch. Resolve false-positive bot findings with a reply stating why. This applies regardless of who authored the PR. When the PR is merge-ready, the agent moves the issue to Human Review.
+- **Human Review.** Human-owned. Do not dispatch coding agents, CI fixes, or review runs on the PR until the issue moves or a human says resume. A human may move an issue here at any time to pause agent work.
+- **Merging.** Permission to merge. Merge only from this column.
+- **Done.** Merged. Verify follows: confirm the AC landed and record the result as a comment on the issue. If the AC did not land, reopen the issue or open a new issue linked to it.
+- **Canceled / Duplicate.** Terminal. New work needs a new issue.
+
+Merge-ready means: PR marked ready for review, clean mergeability, required CI green, no open review threads, no unanswered comments.
+
+If a PR closes without merging, comment on the issue with the reason and move it to Todo.
+
+Ship means cutting a release on one of the project's channels (for example nightly or stable). Release process is defined per project.
+<!-- end dev lifecycle -->
 
 <!-- pstack:models:begin -->
 # pstack model configuration
@@ -59,4 +86,3 @@ swarm workers: cursor:cursor-grok-4.6@xhigh
 architect runners: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
 interrogate reviewers: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
 <!-- pstack:models:end -->
-

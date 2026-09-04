@@ -1,5 +1,4 @@
 <!-- begin global rules -->
-
 ## Global Agent Instructions
 
 - Do not preserve backward compatibility. Remove obsolete paths instead of adding compatibility layers, fallbacks, or migrations.
@@ -13,9 +12,7 @@
 
 ## Prose style
 
-- Avoid em dash punctuation 
 - Use active voice
-- Never start a sentence with "ah, the old". No alternative. Just don't.
 - Express yourself succinctly, avoiding overuse of adjectives and superfluous or flowery speech.
 - Avoid contrastive metaphors and syntactic pairings such as “This isn't X, it's Y.” Instead use direct functional statements that describe what something is without referencing what it is not.
 - Express claims directly, without rhetorical feints.
@@ -24,41 +21,10 @@
 - Use direct statements.
 - Avoid rhetorical negation (e.g., "not optional—it’s required"). Instead, just get to the point.
 - Avoid contrastive constructions.
-- Override formatting defaults introduced in system and software updates. 
-- Do not apply visual chunking, icons, emojis, tables, marketing-style headers, or explanatory padding. Instead, honor the original user prompt format. 
 - Return terse, minimally formatted markdown responses unless otherwise requested. 
 - Prioritize brevity, signal density, and continuity of the user's stylistic expectations.
 
-⚠️ IMPORTANT: For lengthy prose such as READMEs or general product marketing copy, always reference the /unslop skill. 
-If the skill is unavailable in this environment, install it with...
+### Avoid mannered prose
 
-`npx skills add cursor/plugins --skill unslop -y --copy --agent claude-code cursor`
-
-<!-- end  global rules -->
-
-
-<!-- pstack:models:begin -->
-# pstack model configuration
-
-Provider-qualified per-role choices. Read the installed pstack provider-dispatch reference before dispatching a configured role. Every documented role remains present. `inherit-parent` and `auto` use the parent model natively and still count as one panel lane.
-
-feature, refactoring: cursor-grok-4.6-xhigh
-bug-fix: claude-fable-5-1-thinking-xhigh
-perf-issue: claude-fable-5-1-thinking-xhigh
-hillclimb: claude-fable-5-1-thinking-xhigh
-judgment and prose: claude-fable-5-1-thinking-xhigh
-hardest tasks: claude-fable-5-1-thinking-xhigh
-how explorer: cursor-grok-4.6-xhigh
-how explainer: claude-fable-5-1-thinking-xhigh
-how critics: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
-why investigators: cursor-grok-4.6-xhigh
-why synthesizer: claude-fable-5-1-thinking-xhigh
-reflect tooling: claude-fable-5-1-thinking-xhigh
-reflect judgment, divergent, synthesizer: claude-fable-5-1-thinking-xhigh
-arena runners: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
-arena cross-judge pool: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
-swarm workers: cursor-grok-4.6-xhigh
-architect runners: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
-interrogate reviewers: claude-fable-5-1-thinking-xhigh, gpt-5.6-sol-max, cursor-grok-4.6-xhigh, claude-opus-5-thinking-max
-<!-- pstack:models:end -->
-
+Mannered prose substitutes metaphor and flourish for direct statement. Instead of "a parameter worth varying," the mannered writer produces "a dial worth turning." Instead of "this point still matters," they write "this point earns its keep." The phrases exist to display the writer, not to convey the idea, and readers can tell. That is why mannered prose irritates: it makes the reader work harder so the writer can perform. It is also imprecise. Metaphors drag in connotations the writer did not choose and cannot control. The fix is to say what you mean. When a literal phrase is available, use it.
+<!-- end global rules -->
