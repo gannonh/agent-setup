@@ -15,7 +15,7 @@
     ".pi"
   ],
   "scripts": {
-    "build": "tsc && chmod +x dist/cli.js",
+    "build": "blocks/build.sh && tsc && chmod +x dist/cli.js",
     "prepublishOnly": "npm run build",
     "test": "tsx --test test/*.test.ts"
   },
