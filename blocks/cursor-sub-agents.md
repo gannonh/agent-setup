@@ -1,7 +1,3 @@
----
-description: sub-agent model routing
-alwaysApply: true
----
 ## Sub-agents
 
 Use sub-agents to delegate work. Focus on coordination, review and integration. Use the following guidance when dispatching tasks:
