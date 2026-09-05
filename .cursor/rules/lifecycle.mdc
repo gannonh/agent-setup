@@ -17,6 +17,34 @@ alwaysApply: true
 
 - Architecture docs, process docs, ADRs, and other durable artifacts live as files in the repository under `docs/`.
 
+## Project milestones (Linear)
+
+Linear **project milestones** are multi-ticket product gate/phase outcomes. Canonical ops doc: [Milestone use (Kata-sh)](https://linear.app/kata-sh/document/milestone-use-kata-sh-16084ef16dd5).
+
+### Layers (do not conflate)
+
+- **Project status** — live vs paused roster (e.g. Agentis = In Progress).
+- **Milestone** — multi-ticket product gate/phase outcome (e.g. Gate 0: Foundation).
+- **Epic** — parent issue grouping work.
+- **Issue status** — unit-of-work on the rail (Backlog → Todo → Start → In Progress → review columns → Done).
+
+Milestone progress is orthogonal to issue status columns and to project roster status. Do not use milestones as issue status, epic labels, or project status.
+
+### Naming
+
+- `Gate N: <outcome>` — formal PASS criteria in the milestone description.
+- `Phase N: <name>` — later phases without a formal PASS yet.
+- Do not use milestones for sprints, weeks, or individual PRs.
+
+### Rules
+
+1. Plan sets the **project milestone** on every implementable ticket that belongs to that gate/phase when filing.
+2. Milestone description starts with **PASS when…** (or "no formal PASS yet").
+3. Gate **PASS** = in-scope milestone issues Done + gate verification ticket evidence (if any). Program Manager reports; Verifier confirms the gate ticket AC.
+4. Child issues carry the milestone; epics may span milestones.
+5. New product onboard: create Gate/Phase milestones on the Linear project with the first breakout.
+6. Briefings and stuck reports: name the milestone when relevant.
+
 ## Work states (Linear columns)
 
 Linear status is the phase of the work: Research and Plan happen in Backlog, Build in In Progress, Review across Agent Review through Merging, Verify after Done, Ship after Verify. This section defines the states and their gates. Plugins and skills define how work is done inside each phase.
