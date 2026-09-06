@@ -7,16 +7,16 @@ feature, refactoring: cursor:cursor-grok-4.6@xhigh
 bug-fix: codex:gpt-5.6-sol@max
 perf-issue: codex:gpt-5.6-sol@max
 hillclimb: codex:gpt-5.6-sol@max
-judgment and prose: claude:claude-fable-5.1@max
-hardest tasks: claude:claude-fable-5.1@max
+judgment and prose: codex:gpt-6-astra@high
+hardest tasks: codex:gpt-6-astra@max
 how explorer: cursor:cursor-grok-4.6@xhigh
-how explainer: claude:claude-fable-5.1@max
-how critics: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
+how explainer: cursor:claude-fable-5-1@high
+how critics: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
 why investigators, synthesizer: inherit-parent
 reflect tooling, judgment, divergent, synthesizer: inherit-parent
-arena runners: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-arena cross-judge pool: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
+arena runners: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
+arena cross-judge pool: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
 swarm workers: cursor:cursor-grok-4.6@xhigh
-architect runners: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
-interrogate reviewers: claude:claude-fable-5.1@max, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh, claude:claude-opus-5@xhigh
+architect runners: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
+interrogate reviewers: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
 <!-- pstack:models:end -->
