@@ -55,6 +55,12 @@ Codex: `codex plugin remove pstack@open-pstack` and `codex plugin marketplace re
 
 Copied files: delete `~/.codex`, `~/.cursor/rules`, `~/.pi/agent/AGENTS.md` (or the individual files you do not want). Cursor plugins: remove the entry from `enabled_plugins` in `~/.cursor/settings.json` and delete `~/.cursor/plugins/local/<name>`. Pi extensions and skills stay until you uninstall them with `pi` / `npx skills`.
 
+## Lifecycle and dispatch sources
+
+Edit `blocks/lifecycle.md` for the shared development lifecycle, Linear label routing, and Start → Eng OWN contract. Run `blocks/build.sh` to regenerate the Claude, Codex, and Cursor instructions. Do not edit the generated copies directly.
+
+See the [dispatch reference](docs/dispatch.md) for host boundaries and source evidence. Open [the self-contained topology](docs/dispatch-topology.html) in a browser for the Start, OWN, Build, PR, and Review flow. It works offline.
+
 ## License
 
 MIT
