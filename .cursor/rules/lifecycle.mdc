@@ -17,6 +17,45 @@ alwaysApply: true
 
 - Architecture docs, process docs, ADRs, and other durable artifacts live as files in the repository under `docs/`.
 
+## Start and Build dispatch
+
+The operating contract below reflects KAT-3269 as of 2026-09-06. Grok Bot's `dispatch-runtimes` skill is canonical for dispatch validation and launch parameters. Host setup lives in [devops `agent-worker.md`](https://github.com/gannonh/devops/blob/main/docs/agent-worker.md). Do not create a competing routing policy. If these sources disagree, stop and report the conflict before Build.
+
+### Linear labels
+
+Read one label from each group on the Linear issue. `runtime` selects `codex` or `cursor`. `model` selects a short name from the map below. `model-effort` selects `low`, `medium`, `high`, `xhigh`, or `max`. Linear reserves the group name `effort`, so use `model-effort`. Notation such as `runtime:codex` means group `runtime`, label `codex`.
+
+| Model label | Slug |
+| --- | --- |
+| `sol` | `gpt-5.6-sol` |
+| `astra` | `gpt-6-astra` |
+| `fable` | `claude-fable-5-1` |
+| `composer` | `composer-2.5` |
+| `grok` | `grok-4.6` |
+| `opus` | `claude-opus-5` |
+| `luna` | `gpt-5.6-luna` |
+| `terra` | `gpt-5.6-terra` |
+
+Validate the runtime/model pair and the model's effort support against `dispatch-runtimes` before launching. This slug map does not make every runtime/model/effort combination valid. Missing, multiple, unknown, unsupported, or conflicting labels stop dispatch. Report the selected labels and the exact correction needed on the issue. Never silently substitute a runtime, model, effort, host, or default. If the selected model or worker is unavailable, stop rather than falling back.
+
+### Start always hands ownership to Eng
+
+On **Start**, the Program Manager moves the issue to **In Progress** and sends **Eng OWN**, including for Agentis. Eng owns Build dispatch. The former Gannon self-dispatch path, including launching product Build manually in the Codex app, is retired.
+
+The OWN brief carries the Linear id and URL, repo, spec and AC, branch, worktree, `runtime`, `model`, resolved `slug`, and `effort` from `model-effort`. Include the target host and worker or named pool when applicable. For KAT-3269, the route fields are `runtime=codex`, `model=astra`, `slug=gpt-6-astra`, and `effort=high`.
+
+Parallel Starts create one Eng OWN and one implementing agent with its own branch and worktree per Linear id. Never share a checkout between concurrent tickets. A repo worker can serve multiple tickets; its repo-level name does not replace each ticket's worktree isolation.
+
+### Runtime and host
+
+- `runtime:codex` launches a thin Cursor Cloud Agent on **Sartre My Machines**. The agent runs `codex exec` with the resolved model and effort, using the ChatGPT/Codex subscription. The thin agent delegates implementation to Codex; it must not implement with its Cursor model.
+- `runtime:cursor` launches a normal Cursor CloudAgent that implements with the mapped model and its supported effort/reasoning setting, using the Cursor subscription. Cursor's managed VM is the default environment. Use My Machines for host tools, or a pool when named by the dispatch brief.
+- Sartre is the preferred Linux host for `codex exec` and host-tool Builds. Its Cursor workers use `name = repo basename`, for example `agentis`, `agent-setup`, or `open-pstack`. Select My Machines with `environment: { type: machine, name: <repo> }`.
+- Mini holds local checkouts under `/Volumes/EVO/dev/…`. Mini Codex is only for Mac-only work, routed through Eng OWN. It is not an automatic fallback for an unavailable Sartre worker.
+- The Grok Bot computer runs the Program Manager board and Eng OWN coordination. It has no product clones and no Codex login. Grok Bot `ListMachines` is a separate inventory from Cursor My Machines; a ListMachines entry does not prove that a Cursor repo worker exists.
+
+The [dispatch reference](https://github.com/gannonh/agent-setup/blob/main/docs/dispatch.md) links the source evidence and the offline [topology artifact](https://github.com/gannonh/agent-setup/blob/main/docs/dispatch-topology.html). pstack per-role model choices govern work within a dispatched session. They do not override the Linear labels that select the Build runtime and model.
+
 ## Project milestones (Linear)
 
 Linear **project milestones** are multi-ticket product gate/phase outcomes. Canonical ops doc: [Milestone use (Kata-sh)](https://linear.app/kata-sh/document/milestone-use-kata-sh-16084ef16dd5).
@@ -50,9 +89,10 @@ Milestone progress is orthogonal to issue status columns and to project roster s
 Linear status is the phase of the work: Research and Plan happen in Backlog, Build in In Progress, Review across Agent Review through Merging, Verify after Done, Ship after Verify. This section defines the states and their gates. Plugins and skills define how work is done inside each phase.
 
 - **Backlog.** Research gathers evidence and records findings on the issue. Plan turns them into spec and AC on the issue. Do not implement from Backlog.
-- **Todo.** Approved and queued. Moving an issue from Backlog to Todo is the approval. Build starts on an explicit start (assignment or instruction); on start, the agent moves the issue to In Progress.
-- **In Progress.** Implement on a branch against the issue's AC. Draft PRs stay here. When the work is complete, the agent marks the PR ready for review and moves the issue to Agent Review.
-- **Agent Review.** Agent-owned. Fix CI and answer every review thread, human or bot, on the existing branch. Resolve false-positive bot findings with a reply stating why. This applies regardless of who authored the PR. When the PR is merge-ready, the agent moves the issue to Human Review.
+- **Todo.** Approved and queued. Moving an issue from Backlog to Todo is the approval. Wait for Start before Build.
+- **Start.** The Program Manager moves the issue to In Progress and sends Eng OWN with its labels and resolved route. This applies to every project, including Agentis.
+- **In Progress.** Eng dispatches Build on the issue's branch and isolated worktree against its AC. Draft PRs stay here. Keep the PR draft until the artifacts and doc or code diffs are reviewable. The implementing agent returns evidence to Eng Manager, who owns the hop to Agent Review when the work is complete and the PR is ready for review. A draft-only handoff stays draft and In Progress.
+- **Agent Review.** Agent-owned. Fix CI and answer every review thread, human or bot, on the existing branch. Resolve false-positive bot findings with a reply stating why. This applies regardless of who authored the PR. When the PR is merge-ready, Eng Manager moves the issue to Human Review.
 - **Human Review.** Human-owned. Do not dispatch coding agents, CI fixes, or review runs on the PR until the issue moves or a human says resume. A human may move an issue here at any time to pause agent work.
 - **Merging.** Permission to merge. Merge only from this column.
 - **Done.** Merged. Verify follows: confirm the AC landed and record the result as a comment on the issue. If the AC did not land, reopen the issue or open a new issue linked to it.

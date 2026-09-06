@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent dispatch topology | KAT-3269</title>
+<style>
+  :root { color-scheme: light; font-family: system-ui, sans-serif; color: #172b3a; background: #f3f6f8; }
+  body { max-width: 1180px; margin: auto; padding: 28px 20px 48px; line-height: 1.55; }
+  h1 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.15; margin: 10px 0; }
+  h2 { font-size: 1.2rem; }
+  .eyebrow { color: #41596b; font-size: .85rem; letter-spacing: .06em; text-transform: uppercase; }
+  .intro { max-width: 850px; }
+  figure { margin: 24px 0; }
+  .diagram { overflow-x: auto; background: white; border: 1px solid #cbd7df; border-radius: 14px; }
+  svg { display: block; width: 100%; min-width: 940px; height: auto; }
+  svg text { fill: #172b3a; font-family: system-ui, sans-serif; font-size: 15px; }
+  svg .title { font-size: 21px; font-weight: 700; }
+  svg .small { font-size: 13px; }
+  svg .label { font-size: 14px; font-weight: 650; paint-order: stroke; stroke: white; stroke-width: 6px; stroke-linejoin: round; }
+  .node { fill: #f5f9fc; stroke: #adc2d1; stroke-width: 1.5; }
+  .host { fill: #f0f8f3; stroke: #85b49a; }
+  .edge { fill: none; stroke: #246c99; stroke-width: 2.5; marker-end: url(#arrow); }
+  .optional { stroke-dasharray: 7 5; }
+  figcaption { padding: 12px 2px; color: #41596b; font-size: .92rem; }
+  .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; }
+  article { background: white; border: 1px solid #cbd7df; border-radius: 12px; padding: 6px 20px 16px; }
+  li { margin: 8px 0; }
+  code { font-size: .92em; overflow-wrap: anywhere; }
+  a { color: #155b89; }
+  footer { margin-top: 24px; font-size: .92rem; }
+  @media print { body { padding: 0; background: white; } .diagram { overflow: visible; } svg { min-width: 0; } article { break-inside: avoid; } }
+</style>
+</head>
+<body>
+<header>
+  <div class="eyebrow">Agent Setup · KAT-3269 · Operating contract 2026-09-06</div>
+  <h1>Every Start goes through Eng OWN</h1>
+  <p class="intro">Linear selects the Build runtime, model, and effort. Eng owns dispatch for every project, including Agentis. Each parallel ticket gets its own OWN brief, implementing agent, branch, and worktree.</p>
+</header>
+<main>
+<figure>
+<div class="diagram" role="region" aria-label="Dispatch flow diagram, scroll horizontally on small screens" tabindex="0">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1140 810" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">Linear Start to Eng OWN, Build hosts, GitHub PR, and review</title>
+  <desc id="diagram-desc">Linear sends Start to the Program Manager on the Grok Bot computer. The Program Manager moves the issue to In Progress and sends Eng OWN. Eng dispatches Cursor Cloud agents. Normal Cursor builds use a managed VM by default. Thin Codex agents use Sartre My Machines and run codex exec. Mini is reserved for Mac-only Codex work. Build hosts send PRs to GitHub. Evidence returns to Eng Manager for review transitions. Only Linear Merging permits merge.</desc>
+  <defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0L9 4.5L0 9Z" fill="#246c99"/></marker></defs>
+
+  <rect class="node" x="30" y="30" width="280" height="235" rx="12"/>
+  <text class="title" x="50" y="67">Linear</text>
+  <text x="50" y="99">Issue SOT · spec · AC · columns</text>
+  <text x="50" y="127">Labels select Build</text>
+  <text x="50" y="151">runtime | model | model-effort</text>
+  <text x="50" y="184">Todo → Start → In Progress</text>
+  <text x="50" y="211">Review → Merging → Done</text>
+  <text class="small" x="50" y="244">Only Merging grants merge permission.</text>
+
+  <rect class="node" x="430" y="30" width="280" height="235" rx="12"/>
+  <text class="title" x="450" y="67">Grok Bot computer</text>
+  <text x="450" y="101">Program Manager board</text>
+  <path class="edge" d="M460 112V146"/>
+  <text class="label" x="480" y="136">OWN → Eng</text>
+  <text x="450" y="175">runtime · model · slug · effort</text>
+  <text x="450" y="201">No product clones or Codex login</text>
+  <text class="small" x="450" y="229">ListMachines ≠ Cursor My Machines</text>
+  <text class="small" x="450" y="248">Eng Manager owns review hops.</text>
+
+  <rect class="node" x="830" y="30" width="280" height="235" rx="12"/>
+  <text class="title" x="850" y="67">Cursor Cloud agents</text>
+  <text x="850" y="100">runtime:cursor · model implements</text>
+  <text x="850" y="126">runtime:codex · thin launcher</text>
+  <rect x="848" y="146" width="244" height="96" rx="7" fill="#e4edf6"/>
+  <text x="860" y="172">Cursor managed VM</text>
+  <text class="small" x="860" y="195">Default for normal Cursor Builds.</text>
+  <text class="small" x="860" y="216">My Machines for host tools.</text>
+  <text class="small" x="860" y="234">Pools when explicitly named.</text>
+
+  <path class="edge" d="M310 95H430"/>
+  <text class="label" x="342" y="81">Start</text>
+  <text class="small" x="326" y="125">PM moves to</text>
+  <text class="small" x="332" y="145">In Progress</text>
+  <path class="edge" d="M710 95H830"/>
+  <text class="label" x="750" y="81">Build</text>
+  <text class="small" x="734" y="125">Validated</text>
+  <text class="small" x="750" y="145">labels</text>
+
+  <rect class="node host" x="830" y="395" width="280" height="200" rx="12"/>
+  <text class="title" x="850" y="433">Sartre</text>
+  <text x="850" y="466">Preferred Linux Build host</text>
+  <text x="850" y="492">Cursor My Machines → codex exec</text>
+  <text x="850" y="520">Worker name = repo basename</text>
+  <text class="small" x="850" y="546">agentis · agent-setup · open-pstack</text>
+  <text class="small" x="850" y="575">Host tools · isolated ticket worktrees</text>
+  <path class="edge" d="M1000 265V395"/>
+  <text class="label" x="836" y="348">Build · My Machines</text>
+
+  <rect class="node host" x="30" y="395" width="280" height="200" rx="12"/>
+  <text class="title" x="50" y="433">Mini</text>
+  <text x="50" y="466">Local /Volumes/EVO/dev/…</text>
+  <text x="50" y="496">Mini Codex only for Mac-only work</text>
+  <text x="50" y="526">Still dispatched through Eng OWN</text>
+  <text class="small" x="50" y="556">No automatic host fallback.</text>
+  <text class="small" x="50" y="578">Separate from the Grok Bot computer.</text>
+  <path class="edge optional" d="M470 265V320H170V395"/>
+  <text class="label" x="63" y="305">Build · Mac-only exception</text>
+
+  <rect class="node" x="430" y="610" width="280" height="170" rx="12"/>
+  <text class="title" x="450" y="647">GitHub</text>
+  <text x="450" y="678">Code · branches · PRs · CI</text>
+  <text x="450" y="706">Diff review and review threads</text>
+  <text class="small" x="450" y="735">PR names its Linear id.</text>
+  <text class="small" x="450" y="758">Draft until artifacts + diffs are reviewable.</text>
+
+  <path class="edge" d="M950 595V690H710"/>
+  <text class="label" x="797" y="678">PR · Codex / host Build</text>
+  <path class="edge optional" d="M170 595V690H430"/>
+  <text class="label" x="214" y="678">PR · Mac-only Build</text>
+  <path class="edge" d="M865 265V290H770V635H710"/>
+  <text class="label" x="699" y="380">PR</text>
+  <text class="small" x="680" y="402">Managed VM</text>
+  <text class="small" x="680" y="422">or named pool</text>
+  <path class="edge" d="M570 610V265"/>
+  <text class="label" x="385" y="450">Review · evidence to Eng</text>
+  <text class="small" x="353" y="478">Agent Review → Human Review</text>
+  <path class="edge" d="M430 224H310"/>
+  <text class="label" x="339" y="210">Review</text>
+</svg>
+</div>
+<figcaption>Solid arrows show Start, OWN, Build, PR, and Review handoffs. Dashed arrows show the explicit Mac-only exception. Host selection never changes the rule of one worktree per Linear id. This is a process diagram, not a network wiring map.</figcaption>
+</figure>
+<div class="notes">
+<article>
+  <h2>Validate before Build</h2>
+  <p>Read one label from each group. Linear reserves <code>effort</code>, so the group is <code>model-effort</code>. Its labels are <code>low | medium | high | xhigh | max</code>.</p>
+  <p><code>dispatch-runtimes</code> owns pair and effort validation. Missing, conflicting, unsupported, or unavailable selections stop dispatch with the exact correction needed. No silent model, effort, runtime, or host fallback.</p>
+</article>
+<article>
+  <h2>Choose the execution environment</h2>
+  <p>My Machines uses <code>environment: { type: machine, name: &lt;repo&gt; }</code>. Sartre's worker name is the repo basename. The ticket id identifies the isolated branch and worktree.</p>
+  <p>The thin Codex agent runs <code>codex exec</code> using the ChatGPT/Codex subscription. Normal Cursor CloudAgent implementation uses the Cursor subscription and the mapped model with supported effort/reasoning.</p>
+</article>
+<article>
+  <h2>Keep ownership through review</h2>
+  <p>OWN carries the issue, repo, spec and AC, branch, worktree, runtime, model, resolved slug, effort, and applicable host target. Agentis follows the same flow. Gannon's former manual Build path is retired.</p>
+  <p>Eng Manager owns review hops. Human Review pauses agent work. Merge only from Linear Merging. Done means merged, then Verify checks the landed AC. KAT-3269 is a draft-only handoff.</p>
+</article>
+</div>
+</main>
+<footer>
+  <p>This file works offline with no scripts, fonts, images, or styles fetched from the network. The exact slug map lives in the <a href="../blocks/lifecycle.md#linear-labels">shared lifecycle source</a>. See the <a href="dispatch.md">dispatch reference</a> for evidence and precedence. Grok Bot's <code>dispatch-runtimes</code> skill is canonical; <a href="https://github.com/gannonh/devops/blob/main/docs/agent-worker.md">devops agent-worker.md</a> owns host setup. Links to external sources require a network connection.</p>
+</footer>
+</body>
+</html>
