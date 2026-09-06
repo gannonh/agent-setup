@@ -27,4 +27,10 @@ describe("shipped assets", () => {
     const root = findPackageRoot();
     assert.equal(existsSync(join(root, ".claude", "CLAUDE.md")), true);
   });
+
+  it("ships the Codex AGENTS.md and pstack-models.md --codex copies to ~/.codex", () => {
+    const root = findPackageRoot();
+    assert.equal(existsSync(join(root, ".codex", "AGENTS.md")), true);
+    assert.equal(existsSync(join(root, ".codex", "pstack-models.md")), true);
+  });
 });
