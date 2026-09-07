@@ -12,18 +12,15 @@ alwaysApply: true
 - Prefer the smallest change that satisfies the AC. File work discovered outside the AC as a new Backlog issue and keep it out of the current PR.
 - Every implementing PR names exactly one Linear issue id in its title or body. Create the branch with Linear's generated branch name so the GitHub integration links the PR and issue automatically.
 - When blocked, comment on the Linear issue with the exact ask and stop.
+- One implementing agent per Linear id: use that issue's own branch and worktree. Do not share a checkout across concurrent tickets.
 
 ## Docs and artifacts
 
 - Architecture docs, process docs, ADRs, and other durable artifacts live as files in the repository under `docs/`.
 
-## Start and Build dispatch
+## Build labels (when present)
 
-The operating contract below reflects KAT-3269 as of 2026-09-06. Grok Bot's `dispatch-runtimes` skill is canonical for dispatch validation and launch parameters. Host setup lives in [devops `agent-worker.md`](https://github.com/gannonh/devops/blob/main/docs/agent-worker.md). Do not create a competing routing policy. If these sources disagree, stop and report the conflict before Build.
-
-### Linear labels
-
-Read one label from each group on the Linear issue. `runtime` selects `codex` or `cursor`. `model` selects a short name from the map below. `model-effort` selects `low`, `medium`, `high`, `xhigh`, or `max`. Linear reserves the group name `effort`, so use `model-effort`. Notation such as `runtime:codex` means group `runtime`, label `codex`.
+If the Linear issue has `runtime` / `model` / `model-effort` labels, treat them as the intended Build route. Do not invent or silently substitute a different runtime, model, or effort. If labels are missing, conflicting, or unclear, comment on the issue with the exact correction needed and stop.
 
 | Model label | Slug |
 | --- | --- |
@@ -36,38 +33,18 @@ Read one label from each group on the Linear issue. `runtime` selects `codex` or
 | `luna` | `gpt-5.6-luna` |
 | `terra` | `gpt-5.6-terra` |
 
-Validate the runtime/model pair and the model's effort support against `dispatch-runtimes` before launching. This slug map does not make every runtime/model/effort combination valid. Missing, multiple, unknown, unsupported, or conflicting labels stop dispatch. Report the selected labels and the exact correction needed on the issue. Never silently substitute a runtime, model, effort, host, or default. If the selected model or worker is unavailable, stop rather than falling back.
-
-### Start always hands ownership to Eng
-
-On **Start**, the Program Manager moves the issue to **In Progress** and sends **Eng OWN**, including for Agentis. Eng owns Build dispatch. The former Gannon self-dispatch path, including launching product Build manually in the Codex app, is retired.
-
-The OWN brief carries the Linear id and URL, repo, spec and AC, branch, worktree, `runtime`, `model`, resolved `slug`, and `effort` from `model-effort`. Include the target host and worker or named pool when applicable. For KAT-3269, the route fields are `runtime=codex`, `model=astra`, `slug=gpt-6-astra`, and `effort=high`.
-
-Parallel Starts create one Eng OWN and one implementing agent with its own branch and worktree per Linear id. Never share a checkout between concurrent tickets. A repo worker can serve multiple tickets; its repo-level name does not replace each ticket's worktree isolation.
-
-### Runtime and host
-
-- `runtime:codex` launches a thin Cursor Cloud Agent on **Sartre My Machines**. The agent runs `codex exec` with the resolved model and effort, using the ChatGPT/Codex subscription. The thin agent delegates implementation to Codex; it must not implement with its Cursor model.
-- `runtime:cursor` launches a normal Cursor CloudAgent that implements with the mapped model and its supported effort/reasoning setting, using the Cursor subscription. Cursor's managed VM is the default environment. Use My Machines for host tools, or a pool when named by the dispatch brief.
-- Sartre is the preferred Linux host for `codex exec` and host-tool Builds. Its Cursor workers use `name = repo basename`, for example `agentis`, `agent-setup`, or `open-pstack`. Select My Machines with `environment: { type: machine, name: <repo> }`.
-- Mini holds local checkouts under `/Volumes/EVO/dev/…`. Mini Codex is only for Mac-only work, routed through Eng OWN. It is not an automatic fallback for an unavailable Sartre worker.
-- The Grok Bot computer runs the Program Manager board and Eng OWN coordination. It has no product clones and no Codex login. Grok Bot `ListMachines` is a separate inventory from Cursor My Machines; a ListMachines entry does not prove that a Cursor repo worker exists.
-
-The [dispatch reference](https://github.com/gannonh/agent-setup/blob/main/docs/dispatch.md) links the source evidence and the offline [topology artifact](https://github.com/gannonh/agent-setup/blob/main/docs/dispatch-topology.html). pstack per-role model choices govern work within a dispatched session. They do not override the Linear labels that select the Build runtime and model.
+`human-build` on the issue means a human owns Build. Coding agents must not start Build on that ticket unless a human explicitly asks them to on that issue.
 
 ## Project milestones (Linear)
 
-Linear **project milestones** are multi-ticket product gate/phase outcomes. Canonical ops doc: [Milestone use (Kata-sh)](https://linear.app/kata-sh/document/milestone-use-kata-sh-16084ef16dd5).
+Linear **project milestones** are multi-ticket product gate/phase outcomes.
 
 ### Layers (do not conflate)
 
-- **Project status** — live vs paused roster (e.g. Agentis = In Progress).
+- **Project status** — live vs paused roster.
 - **Milestone** — multi-ticket product gate/phase outcome (e.g. Gate 0: Foundation).
 - **Epic** — parent issue grouping work.
 - **Issue status** — unit-of-work on the rail (Backlog → Todo → Start → In Progress → review columns → Done).
-
-Milestone progress is orthogonal to issue status columns and to project roster status. Do not use milestones as issue status, epic labels, or project status.
 
 ### Naming
 
@@ -77,23 +54,21 @@ Milestone progress is orthogonal to issue status columns and to project roster s
 
 ### Rules
 
-1. Plan sets the **project milestone** on every implementable ticket that belongs to that gate/phase when filing.
+1. Every implementable ticket that belongs to a gate/phase should have that **project milestone** set.
 2. Milestone description starts with **PASS when…** (or "no formal PASS yet").
-3. Gate **PASS** = in-scope milestone issues Done + gate verification ticket evidence (if any). Program Manager reports; Verifier confirms the gate ticket AC.
+3. Gate **PASS** = in-scope milestone issues Done + gate verification ticket evidence (if any).
 4. Child issues carry the milestone; epics may span milestones.
-5. New product onboard: create Gate/Phase milestones on the Linear project with the first breakout.
-6. Briefings and stuck reports: name the milestone when relevant.
 
 ## Work states (Linear columns)
 
-Linear status is the phase of the work: Research and Plan happen in Backlog, Build in In Progress, Review across Agent Review through Merging, Verify after Done, Ship after Verify. This section defines the states and their gates. Plugins and skills define how work is done inside each phase.
+Linear status is the phase of the work. This section defines the states and their gates. Plugins and skills define how work is done inside each phase.
 
-- **Backlog.** Research gathers evidence and records findings on the issue. Plan turns them into spec and AC on the issue. Do not implement from Backlog.
-- **Todo.** Approved and queued. Moving an issue from Backlog to Todo is the approval. Wait for Start before Build.
-- **Start.** The Program Manager moves the issue to In Progress and sends Eng OWN with its labels and resolved route. This applies to every project, including Agentis.
-- **In Progress.** Eng dispatches Build on the issue's branch and isolated worktree against its AC. Draft PRs stay here. Keep the PR draft until the artifacts and doc or code diffs are reviewable. The implementing agent returns evidence to Eng Manager, who owns the hop to Agent Review when the work is complete and the PR is ready for review. A draft-only handoff stays draft and In Progress.
-- **Agent Review.** Agent-owned. Fix CI and answer every review thread, human or bot, on the existing branch. Resolve false-positive bot findings with a reply stating why. This applies regardless of who authored the PR. When the PR is merge-ready, Eng Manager moves the issue to Human Review.
-- **Human Review.** Human-owned. Do not dispatch coding agents, CI fixes, or review runs on the PR until the issue moves or a human says resume. A human may move an issue here at any time to pause agent work.
+- **Backlog.** Spec and AC live here. Do not implement from Backlog.
+- **Todo.** Approved and queued. Moving Backlog → Todo is the approval. Wait for Start before Build.
+- **Start.** Explicit start signal. Build begins after the issue moves to In Progress.
+- **In Progress.** Implement on the issue's branch and isolated worktree against its AC. Draft PRs stay here. Keep the PR draft until artifacts and diffs are reviewable. When complete, mark the PR ready for review and move the issue to Agent Review.
+- **Agent Review.** Fix CI and answer every review thread, human or bot, on the existing branch. Resolve false-positive bot findings with a reply stating why. When the PR is merge-ready, move the issue to Human Review.
+- **Human Review.** Human-owned stand-down. Do not dispatch coding agents, CI fixes, or review runs on the PR until the issue moves or a human says resume.
 - **Merging.** Permission to merge. Merge only from this column.
 - **Done.** Merged. Verify follows: confirm the AC landed and record the result as a comment on the issue. If the AC did not land, reopen the issue or open a new issue linked to it.
 - **Canceled / Duplicate.** Terminal. New work needs a new issue.

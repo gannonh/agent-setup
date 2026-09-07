@@ -1,6 +1,6 @@
-**Linear groom — Agentis**
+**Linear groom — Kata Code**
 
-Workspace: `kata-sh` / team `Kata-sh`. Project: **Agentis** (`https://linear.app/kata-sh/project/agentis-63da0b4e8294`). Repo: `gannonh/agentis`. Linear is the only internal tracker; GitHub is code/PRs only.
+Workspace: `kata-sh` / team `Kata-sh`. Project: **Kata Code** (`https://linear.app/kata-sh/project/kata-code-f2107c018151`). Repo: `gannonh/kata-code`. Linear is the only internal tracker; GitHub is code/PRs only.
 
 ### Job
 1. Walk every **open** issue in this project (exclude Done / Canceled / Duplicate).
