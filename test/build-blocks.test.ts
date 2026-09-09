@@ -6,6 +6,13 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 describe("blocks/build.sh", () => {
+  it("assembles .claude/CLAUDE.md from global, lifecycle, and claude-pstack-models", () => {
+    const text = readFileSync(".claude/CLAUDE.md", "utf8");
+    assert.match(text, /<!-- begin global rules -->/);
+    assert.match(text, /<!-- begin dev lifecycle -->/);
+    assert.match(text, /<!-- pstack:models:begin -->/);
+  });
+
   it("committed rule files match a fresh build", () => {
     const out = mkdtempSync(join(tmpdir(), "agent-setup-blocks-"));
     execFileSync("blocks/build.sh", [out]);
