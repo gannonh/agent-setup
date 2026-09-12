@@ -154,22 +154,21 @@ This section overrides any skill, rule, AGENTS.md, CLAUDE.md, or other instructi
 
 Provider-qualified per-role choices. Read the installed pstack provider-dispatch reference before dispatching a configured role. Every documented role remains present. `inherit-parent` and `auto` use the parent model natively and still count as one panel lane.
 
-feature, refactoring: cursor:cursor-grok-4.6@xhigh
-bug-fix: codex:gpt-5.6-sol@max
-perf-issue: codex:gpt-5.6-sol@max
-hillclimb: codex:gpt-5.6-sol@max
-judgment and prose: codex:gpt-6-astra@high
-hardest tasks: codex:gpt-6-astra@max
-how explorer: cursor:cursor-grok-4.6@xhigh
-how explainer: cursor:claude-fable-5-1@high
-how critics: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
+feature, refactoring: claude:fable@high
+bug-fix: claude:fable@high
+perf-issue: claude:fable@high
+hillclimb: claude:fable@low
+judgment and prose: claude:fable@medium
+hardest tasks: claude:fable@xhigh
+how explorer: claude:fable@low
+how explainer: claude:fable@high
 why investigators: inherit-parent
 why synthesizer: inherit-parent
 reflect tooling: inherit-parent
 reflect judgment, divergent, synthesizer: inherit-parent
-arena runners: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
-arena cross-judge pool: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
-swarm workers: cursor:cursor-grok-4.6@xhigh
-architect runners: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
-interrogate reviewers: cursor:claude-fable-5-1@xhigh, codex:gpt-6-astra@xhigh, cursor:cursor-grok-4.6@xhigh, codex:gpt-5.6-sol@xhigh
+arena runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh
+arena cross-judge pool: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh
+swarm workers: claude:fable@low
+architect runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh
+interrogate reviewers: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-5.6-sol@max, cursor:cursor-grok-4.6@xhigh
 <!-- pstack:models:end -->

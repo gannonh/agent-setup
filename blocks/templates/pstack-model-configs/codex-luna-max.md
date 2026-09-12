@@ -3,10 +3,10 @@
 
 Provider-qualified per-role choices. Read the installed pstack provider-dispatch reference before dispatching a configured role. Every documented role remains present. `inherit-parent` and `auto` use the parent model natively and still count as one panel lane.
 
-feature, refactoring: codex:gpt-5.6-luna@max
+feature, refactoring: inherit-parent
 bug-fix: codex:gpt-5.6-luna@max
 perf-issue: codex:gpt-5.6-luna@max
-hillclimb: codex:gpt-5.6-luna@max
+hillclimb: inherit-parent
 judgment and prose: codex:gpt-5.6-luna@max
 hardest tasks: inherit-parent
 how explorer: codex:gpt-5.6-luna@max

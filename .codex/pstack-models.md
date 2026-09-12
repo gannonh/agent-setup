@@ -3,22 +3,21 @@
 
 Provider-qualified per-role choices. Read the installed pstack provider-dispatch reference before dispatching a configured role. Every documented role remains present. `inherit-parent` and `auto` use the parent model natively and still count as one panel lane.
 
-feature, refactoring: codex:gpt-6-astra@low
-bug-fix: codex:gpt-6-astra@low
-perf-issue: codex:gpt-6-astra@low
-hillclimb: codex:gpt-6-astra@low
-judgment and prose: codex:gpt-6-astra@high
+feature, refactoring: codex:gpt-6-astra@high
+bug-fix: codex:gpt-5.6-sol@max
+perf-issue: codex:gpt-5.6-sol@max
+hillclimb: codex:gpt-5.6-sol@xhigh
+judgment and prose: codex:gpt-6-astra@medium
 hardest tasks: codex:gpt-6-astra@max
-how explorer: codex:gpt-6-astra@low
+how explorer: codex:gpt-5.6-sol@high
 how explainer: codex:gpt-6-astra@high
-how critics: codex:gpt-6-astra@xhigh, codex:gpt-5.6-terra@max, codex:gpt-5.6-luna@max, codex:gpt-5.6-sol@max
 why investigators: inherit-parent
 why synthesizer: inherit-parent
 reflect tooling: inherit-parent
 reflect judgment, divergent, synthesizer: inherit-parent
-arena runners: codex:gpt-6-astra@xhigh, codex:gpt-5.6-terra@max, codex:gpt-5.6-luna@max, codex:gpt-5.6-sol@max
-arena cross-judge pool: codex:gpt-6-astra@xhigh, codex:gpt-5.6-terra@max, codex:gpt-5.6-luna@max, codex:gpt-5.6-sol@max
-swarm workers: codex:gpt-6-astra@low
-architect runners: codex:gpt-6-astra@xhigh, codex:gpt-5.6-terra@max, codex:gpt-5.6-luna@max, codex:gpt-5.6-sol@max
-interrogate reviewers: codex:gpt-6-astra@xhigh, codex:gpt-5.6-terra@max, codex:gpt-5.6-luna@max, codex:gpt-5.6-sol@max
+arena runners: codex:gpt-6-astra@xhigh, codex:gpt-5.6-sol@max, claude:fable@xhigh, cursor:cursor-grok-4.6@xhigh
+arena cross-judge pool: codex:gpt-6-astra@xhigh, codex:gpt-5.6-sol@max, claude:fable@xhigh, cursor:cursor-grok-4.6@xhigh
+swarm workers: codex:gpt-5.6-sol@high
+architect runners: codex:gpt-6-astra@xhigh, codex:gpt-5.6-sol@max, claude:fable@xhigh, cursor:cursor-grok-4.6@xhigh
+interrogate reviewers: codex:gpt-6-astra@xhigh, codex:gpt-5.6-sol@max, claude:fable@xhigh, cursor:cursor-grok-4.6@xhigh
 <!-- pstack:models:end -->
