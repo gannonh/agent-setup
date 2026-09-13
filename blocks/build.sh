@@ -13,7 +13,8 @@ write() { mkdir -p "$out/$(dirname "$1")"; "${@:2}" > "$out/$1"; }
 # Shared blocks: global, lifecycle. Harness-specific blocks carry a <harness>- prefix.
 write .claude/CLAUDE.md               blocks global lifecycle claude-pstack-models
 write .claude/pstack-models.md        blocks claude-pstack-models
-write .codex/AGENTS.md                blocks global lifecycle codex-pstack-models
+write .codex/AGENTS.override.md       blocks global lifecycle codex-pstack-models
+write .codex/AGENTS.md                blocks global lifecycle 
 write .codex/pstack-models.md         blocks codex-pstack-models
 write .pi/agent/AGENTS.md             blocks pi-sub-agents
 write .cursor/rules/global.mdc        mdc "global agent rules" global
