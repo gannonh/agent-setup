@@ -63,6 +63,17 @@
 - When blocked, comment on the Linear issue with the exact ask and stop.
 - One implementing agent per Linear id: use that issue's own branch and worktree. Do not share a checkout across concurrent tickets.
 
+## Ticket size: vertical slices
+
+- The unit of planning, ticketing, and PR size is a vertical slice: one thin end-to-end path through every layer it touches (interface, logic, storage, tests) that a user or reviewer can exercise once merged.
+- Write each implementable Linear issue as one slice. State the AC as observable behavior of the slice, not as layers completed.
+- Do not file layer tickets such as "add the data model", "build the API", or "wire the UI". A layer with no demonstrable behavior on its own belongs inside the slice that first needs it.
+- Break an epic or phase into slices in delivery order. The first child is the smallest path that works end to end. Each later child adds one capability on top of the product that already works. Do not queue a stack of tickets that only produce value once the last one lands.
+- Split a ticket when its AC covers more than one demonstrable outcome. Merge tickets when neither is demonstrable alone.
+- One slice is one PR. If a PR cannot show its slice working, the ticket was cut wrong: fix the ticket before continuing.
+- Chores with no user-facing behavior, such as dependency bumps or CI config, are exempt. Keep them small and separate from slices.
+- Prototypes are the other exception. A prototype ticket establishes UI patterns and feature shape against mock data or stubs, with no production wiring. It is still one ticket and one PR, and its AC is the visible behavior it demonstrates. Once it merges, cut the follow-on work as slices: each slice takes one piece of the prototype and wires it end to end through real logic and storage. Do not wire the whole prototype in one ticket.
+
 ## Docs and artifacts
 
 - Architecture docs, process docs, ADRs, and other durable artifacts live as files in the repository under `docs/`.
@@ -92,7 +103,7 @@ Linear **project milestones** are multi-ticket product gate/phase outcomes.
 
 - **Project status** — live vs paused roster.
 - **Milestone** — multi-ticket product gate/phase outcome (e.g. Gate 0: Foundation).
-- **Epic** — parent issue grouping work.
+- **Epic** — parent issue grouping work. Its children are vertical slices in delivery order.
 - **Issue status** — unit-of-work on the rail (Backlog → Todo → Start → In Progress → review columns → Done).
 
 ### Naming
@@ -107,6 +118,7 @@ Linear **project milestones** are multi-ticket product gate/phase outcomes.
 2. Milestone description starts with **PASS when…** (or "no formal PASS yet").
 3. Gate **PASS** = in-scope milestone issues Done + gate verification ticket evidence (if any).
 4. Child issues carry the milestone; epics may span milestones.
+5. Sequence a milestone's tickets as vertical slices so the gate becomes demonstrable early and stays demonstrable as tickets land.
 
 ## Work states (Linear columns)
 
