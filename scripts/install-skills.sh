@@ -6,7 +6,7 @@ set -euo pipefail
 # skill must not abort dependency setup (this script runs from worktree:setup and
 # from the Cloud Agent environment install).
 add_skill() {
-  if ! npx --yes skills add "$@" -y --copy --agent claude-code cursor codex; then
+  if ! npx --yes skills add "$@" -y --copy --agent claude-code codex; then
     echo "install-skills: skipped 'skills add $*' (command failed)" >&2
   fi
 }
@@ -14,6 +14,14 @@ add_skill() {
 # gannonh/skills
 add_skill gannonh/skills --skill thermo-run
 add_skill gannonh/skills --skill readme
+add_skill gannonh/skills --skill babysit-pr
+
+# gannonh/plan-build-verify
+add_skill gannonh/plan-build-verify --skill plan
+add_skill gannonh/plan-build-verify --skill build
+add_skill gannonh/plan-build-verify --skill verify
+add_skill gannonh/plan-build-verify --skill verify
+add_skill gannonh/plan-build-verify --skill triage
 
 # cursor plugin skills (for non-cursor agents)
 add_skill cursor/plugins --skill thermos
