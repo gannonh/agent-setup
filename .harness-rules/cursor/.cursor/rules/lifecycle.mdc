@@ -39,7 +39,7 @@ If the Linear issue has `runtime` / `model` / `model-effort` labels, treat them 
 | `astra` | `gpt-6-astra` |
 | `fable` | `claude-fable-5-1` |
 | `composer` | `composer-2.5` |
-| `grok` | `grok-4.6` |
+| `grok` | `grok-4.7` |
 | `opus` | `claude-opus-5` |
 | `luna` | `gpt-5.6-luna` |
 | `terra` | `gpt-5.6-terra` |
