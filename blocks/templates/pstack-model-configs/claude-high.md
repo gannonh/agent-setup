@@ -15,9 +15,9 @@ why investigators: inherit-parent
 why synthesizer: inherit-parent
 reflect tooling: inherit-parent
 reflect judgment, divergent, synthesizer: inherit-parent
-arena runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:cursor-grok-4.7@xhigh
-arena cross-judge pool: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:cursor-grok-4.7@xhigh
+arena runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:grok-4.7@xhigh
+arena cross-judge pool: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:grok-4.7@xhigh
 swarm workers: claude:fable@low
-architect runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:cursor-grok-4.7@xhigh
-interrogate reviewers: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:cursor-grok-4.7@xhigh
+architect runners: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:grok-4.7@xhigh
+interrogate reviewers: claude:fable@xhigh, claude:opus@xhigh, codex:gpt-6-sol@max, cursor:grok-4.7@xhigh
 <!-- pstack:models:end -->

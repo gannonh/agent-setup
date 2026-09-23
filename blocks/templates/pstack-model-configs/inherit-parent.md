@@ -6,7 +6,7 @@ Provider-qualified per-role choices. Read the installed pstack provider-dispatch
 feature, refactoring: inherit-parent
 bug-fix: inherit-parent
 perf-issue: inherit-parent
-hillclimb: cursor:cursor-grok-4.7@xhig
+hillclimb: cursor:grok-4.7@xhig
 judgment and prose: inherit-parent
 hardest tasks: codex:gpt-6-astra@max
 how explorer: inherit-parent
