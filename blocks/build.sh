@@ -11,7 +11,7 @@ mdc() { printf -- '---\ndescription: %s\nalwaysApply: true\n---\n' "$1"; blocks 
 write() { mkdir -p "$out/$(dirname "$1")"; "${@:2}" > "$out/$1"; }
 
 # Shared blocks: global, lifecycle. Harness-specific blocks carry a <harness>- prefix.
-write .harness-rules/claude/.claude/CLAUDE.md      blocks global lifecycle kata-code-browser claude-pstack-models
+write .harness-rules/claude/.claude/CLAUDE.md      blocks lifecycle claude-pstack-models
 # write .harness-rules/claude/.claude/CLAUDE.md      blocks global lifecycle
 write .harness-rules/codex/AGENTS.override.md      blocks global lifecycle kata-code-browser codex-pstack-models
 # write .harness-rules/codex/AGENTS.md      blocks global lifecycle 
